@@ -1,15 +1,17 @@
 'use client';
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { useTranslations } from 'next-intl';
 
 interface ProgressChartProps {
   data: { date: string; xp: number }[];
 }
 
 export default function ProgressChart({ data }: ProgressChartProps) {
+  const t = useTranslations();
   return (
     <div className="bg-white cute-border border-4 border-cute-primary rounded-2xl p-6 cute-shadow">
-      <h3 className="text-2xl font-bold text-cute-primary mb-4">Progress Over Time</h3>
+      <h3 className="text-2xl font-bold text-cute-primary mb-4">{t('pages.dashboard.progressOverTime')}</h3>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" stroke="#FFB6C1" />

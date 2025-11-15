@@ -59,9 +59,9 @@ export default function GeometryPage() {
   const locale = useLocale();
   const [shapes] = useState(generateGeometryQuestion());
   const [targets, setTargets] = useState([
-    { id: 'target-3', label: '3 sides', shapeId: null as string | null },
-    { id: 'target-4', label: '4 equal sides', shapeId: null as string | null },
-    { id: 'target-0', label: 'Round shape', shapeId: null as string | null },
+    { id: 'target-3', label: t('games.geometry.targetLabels.threeSides'), shapeId: null as string | null },
+    { id: 'target-4', label: t('games.geometry.targetLabels.fourEqualSides'), shapeId: null as string | null },
+    { id: 'target-0', label: t('games.geometry.targetLabels.roundShape'), shapeId: null as string | null },
   ]);
   const [selectedShape, setSelectedShape] = useState<string | null>(null);
   const [completed, setCompleted] = useState(false);
@@ -122,9 +122,9 @@ export default function GeometryPage() {
   }, []);
 
   const shapeData = [
-    { id: 'triangle', name: 'Triangle', emoji: '🔺', sides: 3 },
-    { id: 'square', name: 'Square', emoji: '⬜', sides: 4 },
-    { id: 'circle', name: 'Circle', emoji: '⭕', sides: 0 },
+    { id: 'triangle', name: t('games.geometry.shapeNames.triangle'), emoji: '🔺', sides: 3 },
+    { id: 'square', name: t('games.geometry.shapeNames.square'), emoji: '⬜', sides: 4 },
+    { id: 'circle', name: t('games.geometry.shapeNames.circle'), emoji: '⭕', sides: 0 },
   ];
 
   const handleShapeClick = (shapeId: string) => {
@@ -201,9 +201,9 @@ export default function GeometryPage() {
 
   const resetGame = () => {
     setTargets([
-      { id: 'target-3', label: '3 sides', shapeId: null },
-      { id: 'target-4', label: '4 equal sides', shapeId: null },
-      { id: 'target-0', label: 'Round shape', shapeId: null },
+      { id: 'target-3', label: t('games.geometry.targetLabels.threeSides'), shapeId: null },
+      { id: 'target-4', label: t('games.geometry.targetLabels.fourEqualSides'), shapeId: null },
+      { id: 'target-0', label: t('games.geometry.targetLabels.roundShape'), shapeId: null },
     ]);
     setSelectedShape(null);
     setCompleted(false);

@@ -53,7 +53,8 @@
       "chooseGame": "Bir Oyun Seç",
       "recentGames": "Son Oyunlar",
       "correct": "doğru",
-      "wrong": "yanlış"
+      "wrong": "yanlış",
+      "progressOverTime": "Zaman İçinde İlerleme"
     },
     "games": {
       "title": "Oyununu Seç!",
@@ -178,7 +179,15 @@
       "levelComplete": "Seviye Tamamlandı!",
       "difficulty": "Zorluk",
       "xpEarned": "⭐ Kazanılan XP",
-      "backToDashboard": "Ana Sayfaya Dön"
+      "backToDashboard": "Ana Sayfaya Dön",
+      "levelNames": {
+        "1": "Ada Başlangıcı",
+        "2": "Çöl Vahası",
+        "3": "Dağ Zirvesi",
+        "4": "Orman Yolu",
+        "5": "Kristal Mağara",
+        "6": "Gökyüzü Kalesi"
+      }
     },
     "fractions": {
       "name": "Kesirler",
@@ -207,7 +216,17 @@
       "wrongAnswerEndsGame": "Yanlış cevap oyunu bitirir!",
       "playAgain": "Tekrar Oyna",
       "reset": "Sıfırla",
-      "dashboard": "Ana Sayfa"
+      "dashboard": "Ana Sayfa",
+      "shapeNames": {
+        "triangle": "Üçgen",
+        "square": "Kare",
+        "circle": "Daire"
+      },
+      "targetLabels": {
+        "threeSides": "3 kenar",
+        "fourEqualSides": "4 eşit kenar",
+        "roundShape": "Yuvarlak şekil"
+      }
     },
     "wordStories": {
       "name": "Kelime Hikayeleri",

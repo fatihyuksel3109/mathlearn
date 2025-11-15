@@ -38,12 +38,12 @@ function AdventureContent() {
   };
 
   const [levels, setLevels] = useState<Level[]>([
-    { id: '1', name: 'Island Start', difficulty: 1, stars: 0, completed: false, icon: '🏝️', position: { x: 10, y: 20 } },
-    { id: '2', name: 'Desert Oasis', difficulty: 2, stars: 0, completed: false, icon: '🏜️', position: { x: 30, y: 40 } },
-    { id: '3', name: 'Mountain Peak', difficulty: 3, stars: 0, completed: false, icon: '⛰️', position: { x: 50, y: 20 } },
-    { id: '4', name: 'Forest Path', difficulty: 2, stars: 0, completed: false, icon: '🌲', position: { x: 70, y: 50 } },
-    { id: '5', name: 'Crystal Cave', difficulty: 4, stars: 0, completed: false, icon: '💎', position: { x: 20, y: 70 } },
-    { id: '6', name: 'Sky Castle', difficulty: 5, stars: 0, completed: false, icon: '🏰', position: { x: 80, y: 10 } },
+    { id: '1', name: t('games.adventure.levelNames.1'), difficulty: 1, stars: 0, completed: false, icon: '🏝️', position: { x: 10, y: 20 } },
+    { id: '2', name: t('games.adventure.levelNames.2'), difficulty: 2, stars: 0, completed: false, icon: '🏜️', position: { x: 30, y: 40 } },
+    { id: '3', name: t('games.adventure.levelNames.3'), difficulty: 3, stars: 0, completed: false, icon: '⛰️', position: { x: 50, y: 20 } },
+    { id: '4', name: t('games.adventure.levelNames.4'), difficulty: 2, stars: 0, completed: false, icon: '🌲', position: { x: 70, y: 50 } },
+    { id: '5', name: t('games.adventure.levelNames.5'), difficulty: 4, stars: 0, completed: false, icon: '💎', position: { x: 20, y: 70 } },
+    { id: '6', name: t('games.adventure.levelNames.6'), difficulty: 5, stars: 0, completed: false, icon: '🏰', position: { x: 80, y: 10 } },
   ]);
 
   const [correctAnswersByLevel, setCorrectAnswersByLevel] = useState<Record<string, number>>({});

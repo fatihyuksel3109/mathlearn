@@ -53,7 +53,8 @@
       "chooseGame": "Choose a Game",
       "recentGames": "Recent Games",
       "correct": "correct",
-      "wrong": "wrong"
+      "wrong": "wrong",
+      "progressOverTime": "Progress Over Time"
     },
     "games": {
       "title": "Choose Your Game!",
@@ -178,7 +179,15 @@
       "levelComplete": "Level Complete!",
       "difficulty": "Difficulty",
       "xpEarned": "⭐ XP Earned",
-      "backToDashboard": "Back to Dashboard"
+      "backToDashboard": "Back to Dashboard",
+      "levelNames": {
+        "1": "Island Start",
+        "2": "Desert Oasis",
+        "3": "Mountain Peak",
+        "4": "Forest Path",
+        "5": "Crystal Cave",
+        "6": "Sky Castle"
+      }
     },
     "fractions": {
       "name": "Fractions",
@@ -207,7 +216,17 @@
       "wrongAnswerEndsGame": "Wrong answer ends the game!",
       "playAgain": "Play Again",
       "reset": "Reset",
-      "dashboard": "Dashboard"
+      "dashboard": "Dashboard",
+      "shapeNames": {
+        "triangle": "Triangle",
+        "square": "Square",
+        "circle": "Circle"
+      },
+      "targetLabels": {
+        "threeSides": "3 sides",
+        "fourEqualSides": "4 equal sides",
+        "roundShape": "Round shape"
+      }
     },
     "wordStories": {
       "name": "Word Stories",
