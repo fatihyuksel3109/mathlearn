@@ -252,8 +252,8 @@
   },
   "wordProblems": {
     "names": {
-      "en": ["Sara", "Tom", "Emma", "Jake", "Mia", "Alex", "Luna", "Noah"],
-      "tr": ["Ayşe", "Ali", "Elif", "Can", "Zeynep", "Emre", "Deniz", "Arda"]
+      "en": ["Selma", "Ali", "Elif", "Tuğba", "Zeynep", "Erva", "M.Fatih", "Faik", "Muammer", "Fatih"],
+      "tr": ["Selma", "Ali", "Elif", "Tuğba", "Zeynep", "Erva", "M.Fatih", "Faik", "Muammer", "Fatih"]
     },
     "items": {
       "en": ["apples", "stickers", "candies", "toys", "books", "pencils", "marbles", "cookies"],
@@ -261,7 +261,7 @@
     },
     "itemsPlural": {
       "en": ["birds", "butterflies", "flowers", "bees"],
-      "tr": ["kuş", "kelebek", "çiçek", "arı"]
+      "tr": ["kuş", "kelebek", "böcek", "arı"]
     },
     "subtraction": {
       "storyTemplate": "{name}'in {a} tane {item} var ve {b} tanesini {friend} veriyor. {name}'in kaç tane {item} kaldı?",

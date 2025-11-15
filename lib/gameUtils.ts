@@ -71,6 +71,71 @@ export function generateWordProblem(t: (key: string, values?: any) => string, me
     return typeof value === 'string' ? value : key;
   };
 
+  // Helper function to add Turkish genitive case for proper names
+  // Handles buffer 'n' for vowel-ending names (e.g., "Ali'nin", "Erva'nın")
+  const addTurkishGenitive = (name: string): string => {
+    if (locale !== 'tr') return name;
+    
+    const lastChar = name[name.length - 1];
+    const vowels = 'aeıioöuü';
+    const isVowel = vowels.includes(lastChar.toLowerCase());
+    
+    // Find the last vowel for vowel harmony
+    const lastVowel = name.split('').reverse().find(c => vowels.includes(c.toLowerCase()));
+    if (!lastVowel) return name + "'in"; // fallback
+    
+    // Determine genitive suffix based on vowel harmony
+    let suffix: string;
+    if ('aı'.includes(lastVowel.toLowerCase())) suffix = 'ın';
+    else if ('ei'.includes(lastVowel.toLowerCase())) suffix = 'in';
+    else if ('ou'.includes(lastVowel.toLowerCase())) suffix = 'un';
+    else if ('öü'.includes(lastVowel.toLowerCase())) suffix = 'ün';
+    else suffix = 'in'; // fallback
+    
+    // If name ends in vowel, add buffer 'n' before suffix
+    if (isVowel) {
+      return name + "'n" + suffix;
+    } else {
+      // If name ends in consonant, just add ' + suffix
+      return name + "'" + suffix;
+    }
+  };
+
+  // Helper function to add Turkish possessive suffix (-si, -sı, -su, -sü)
+  const addTurkishPossessive = (word: string): string => {
+    if (locale !== 'tr') return word;
+    
+    const lastChar = word[word.length - 1];
+    const vowels = 'aeıioöuü';
+    const isVowel = vowels.includes(lastChar.toLowerCase());
+    
+    // Find the last vowel for vowel harmony
+    const lastVowel = word.split('').reverse().find(c => vowels.includes(c.toLowerCase()));
+    if (!lastVowel) return word + 'i'; // fallback
+    
+    // Determine possessive suffix vowel based on vowel harmony
+    let possessiveVowel: string;
+    if ('aı'.includes(lastVowel.toLowerCase())) possessiveVowel = 'ı';
+    else if ('ei'.includes(lastVowel.toLowerCase())) possessiveVowel = 'i';
+    else if ('ou'.includes(lastVowel.toLowerCase())) possessiveVowel = 'u';
+    else if ('öü'.includes(lastVowel.toLowerCase())) possessiveVowel = 'ü';
+    else possessiveVowel = 'i'; // fallback
+    
+    // If word ends in vowel, add 's' buffer + vowel (e.g., "elma" → "elması", "kutu" → "kutusu")
+    if (isVowel) {
+      return word + 's' + possessiveVowel;
+    } else {
+      // If word ends in consonant, apply softening if needed, then add ONLY vowel (NO 's' buffer)
+      // e.g., "kitap" → "kitabı", "oyuncak" → "oyuncağı", "kalem" → "kalemi"
+      const hardConsonants: Record<string, string> = { 'p': 'b', 'ç': 'c', 't': 'd', 'k': 'ğ' };
+      let base = word;
+      if (hardConsonants[lastChar.toLowerCase()]) {
+        base = word.slice(0, -1) + hardConsonants[lastChar.toLowerCase()];
+      }
+      return base + possessiveVowel; // NO 's' buffer for consonant-ending words
+    }
+  };
+
   // Helper function to add Turkish accusative case suffix (-i, -ı, -u, -ü)
   const addTurkishAccusative = (word: string): string => {
     if (locale !== 'tr') return word;
@@ -118,18 +183,26 @@ export function generateWordProblem(t: (key: string, values?: any) => string, me
       type: 'subtraction',
       storyTemplate: (a: number, b: number, name: string, item: string, friend: string) => {
         const template = getTranslation('wordProblems.subtraction.storyTemplate');
-        const itemWithAccusative = addTurkishAccusative(item);
+        // Use genitive for name (replaces {name}'in with proper genitive form)
+        const nameGenitive = addTurkishGenitive(name);
+        // Use possessive for items in "var" and "kaldı" contexts
+        const itemWithPossessive = addTurkishPossessive(item);
         return template
-          .replace(/{name}/g, name)
+          .replace(/{name}'in/g, nameGenitive)
           .replace(/{a}/g, a.toString())
           .replace(/{b}/g, b.toString())
-          .replace(/{item}/g, itemWithAccusative)
+          .replace(/{item}/g, itemWithPossessive)
           .replace(/{friend}/g, friend);
       },
       questionTemplate: (name: string, item: string) => {
         const template = getTranslation('wordProblems.subtraction.questionTemplate');
-        const itemWithAccusative = addTurkishAccusative(item);
-        return template.replace(/{name}/g, name).replace(/{item}/g, itemWithAccusative);
+        // Use genitive for name
+        const nameGenitive = addTurkishGenitive(name);
+        // Use possessive for items in "kaldı" context
+        const itemWithPossessive = addTurkishPossessive(item);
+        return template
+          .replace(/{name}'in/g, nameGenitive)
+          .replace(/{item}/g, itemWithPossessive);
       },
       generate: () => {
         const friendOptions = (messages?.wordProblems?.subtraction?.friend?.[locale] || messages?.wordProblems?.subtraction?.friend?.en) as string[] || [];
@@ -146,18 +219,35 @@ export function generateWordProblem(t: (key: string, values?: any) => string, me
       type: 'addition',
       storyTemplate: (a: number, b: number, name: string, item: string, action: string) => {
         const template = getTranslation('wordProblems.addition.storyTemplate');
-        const itemWithAccusative = addTurkishAccusative(item);
-        return template
-          .replace(/{name}/g, name)
+        // Use genitive for name
+        const nameGenitive = addTurkishGenitive(name);
+        // Use possessive for items in "var" contexts
+        const itemWithPossessive = addTurkishPossessive(item);
+        // Template: "{name}'in {a} tane {item} var. {b} tane {item} daha {action}. {name}'in şimdi kaç tane {item} var?"
+        // First {item} (before "var") → possessive
+        // Second {item} (before "daha") → base form (subject)
+        // Third {item} (before "var" in question) → possessive
+        // Replace in specific order to handle different {item} contexts
+        let result = template
+          .replace(/{name}'in/g, nameGenitive)
           .replace(/{a}/g, a.toString())
           .replace(/{b}/g, b.toString())
-          .replace(/{item}/g, itemWithAccusative)
           .replace(/{action}/g, action);
+        // Replace {item} placeholders in order: use temporary markers
+        result = result.replace(/{item}/, itemWithPossessive); // First {item} before "var"
+        result = result.replace(/{item}/, item); // Second {item} before "daha" (base form)
+        result = result.replace(/{item}/, itemWithPossessive); // Third {item} before "var" in question
+        return result;
       },
       questionTemplate: (name: string, item: string) => {
         const template = getTranslation('wordProblems.addition.questionTemplate');
-        const itemWithAccusative = addTurkishAccusative(item);
-        return template.replace(/{name}/g, name).replace(/{item}/g, itemWithAccusative);
+        // Use genitive for name
+        const nameGenitive = addTurkishGenitive(name);
+        // Use possessive for items in "var" context
+        const itemWithPossessive = addTurkishPossessive(item);
+        return template
+          .replace(/{name}'in/g, nameGenitive)
+          .replace(/{item}/g, itemWithPossessive);
       },
       generate: () => {
         const actionOptions = (messages?.wordProblems?.addition?.action?.[locale] || messages?.wordProblems?.addition?.action?.en) as string[] || [];
@@ -174,17 +264,29 @@ export function generateWordProblem(t: (key: string, values?: any) => string, me
       type: 'division',
       storyTemplate: (a: number, b: number, name: string, item: string, action: string, people: string) => {
         const template = getTranslation('wordProblems.division.storyTemplate');
+        // Use genitive for name
+        const nameGenitive = addTurkishGenitive(name);
+        // Use possessive for items in "var" context
+        const itemWithPossessive = addTurkishPossessive(item);
+        // Use accusative for items in "alır" context (direct object)
         const itemWithAccusative = addTurkishAccusative(item);
-        return template
-          .replace(/{name}/g, name)
+        // Template: "{name}'in {a} tane {item} var. Bunları {b} {people} ile eşit olarak {action}. Her kişi kaç tane {item} alır?"
+        // First {item} (before "var") → possessive
+        // Second {item} (before "alır") → accusative (direct object)
+        let result = template
+          .replace(/{name}'in/g, nameGenitive)
           .replace(/{a}/g, a.toString())
           .replace(/{b}/g, b.toString())
-          .replace(/{item}/g, itemWithAccusative)
           .replace(/{action}/g, action)
           .replace(/{people}/g, people);
+        // Replace {item} placeholders in order
+        result = result.replace(/{item}/, itemWithPossessive); // First {item} before "var"
+        result = result.replace(/{item}/, itemWithAccusative); // Second {item} before "alır"
+        return result;
       },
       questionTemplate: (name: string, item: string) => {
         const template = getTranslation('wordProblems.division.questionTemplate');
+        // Use accusative for items in "alır" context (direct object)
         const itemWithAccusative = addTurkishAccusative(item);
         return template.replace(/{item}/g, itemWithAccusative);
       },
@@ -206,20 +308,36 @@ export function generateWordProblem(t: (key: string, values?: any) => string, me
       type: 'multiplication',
       storyTemplate: (a: number, b: number, name: string, item: string, container: string, containerSingular: string) => {
         const template = getTranslation('wordProblems.multiplication.storyTemplate');
+        // Use genitive for name
+        const nameGenitive = addTurkishGenitive(name);
+        // Use possessive for containers in "var" context
+        const containerWithPossessive = addTurkishPossessive(container);
+        // Use accusative for items in "içeriyor" context (direct object)
         const itemWithAccusative = addTurkishAccusative(item);
-        const containerWithAccusative = addTurkishAccusative(container);
-        return template
-          .replace(/{name}/g, name)
+        // Use possessive for items in "var" context
+        const itemWithPossessive = addTurkishPossessive(item);
+        // Template: "{name}'in {a} tane {container} var. Her {containerSingular} {b} tane {item} içeriyor. {name}'in toplam kaç tane {item} var?"
+        let result = template
+          .replace(/{name}'in/g, nameGenitive)
           .replace(/{a}/g, a.toString())
           .replace(/{b}/g, b.toString())
-          .replace(/{item}/g, itemWithAccusative)
-          .replace(/{container}/g, containerWithAccusative)
           .replace(/{containerSingular}/g, containerSingular);
+        // Replace {container} (before "var") with possessive
+        result = result.replace(/{container}/, containerWithPossessive);
+        // Replace {item} placeholders in order
+        result = result.replace(/{item}/, itemWithAccusative); // First {item} before "içeriyor"
+        result = result.replace(/{item}/, itemWithPossessive); // Second {item} before "var" in question
+        return result;
       },
       questionTemplate: (name: string, item: string) => {
         const template = getTranslation('wordProblems.multiplication.questionTemplate');
-        const itemWithAccusative = addTurkishAccusative(item);
-        return template.replace(/{name}/g, name).replace(/{item}/g, itemWithAccusative);
+        // Use genitive for name
+        const nameGenitive = addTurkishGenitive(name);
+        // Use possessive for items in "var" context
+        const itemWithPossessive = addTurkishPossessive(item);
+        return template
+          .replace(/{name}'in/g, nameGenitive)
+          .replace(/{item}/g, itemWithPossessive);
       },
       generate: () => {
         const containerOptions = (messages?.wordProblems?.multiplication?.container?.[locale] || messages?.wordProblems?.multiplication?.container?.en) as string[] || [];
@@ -239,17 +357,19 @@ export function generateWordProblem(t: (key: string, values?: any) => string, me
       type: 'subtraction_count',
       storyTemplate: (a: number, b: number, name: string, item: string, location: string, action: string) => {
         const template = getTranslation('wordProblems.subtractionCount.storyTemplate');
+        // In locative "var" sentences with numerals, items should remain in base form (no suffix)
+        // Template: "{location} {a} {item} var. {b} {item} {action}. Kaç {item} kaldı?"
         return template
           .replace(/{a}/g, a.toString())
           .replace(/{b}/g, b.toString())
-          .replace(/{item}/g, item)
+          .replace(/{item}/g, item) // Base form, no suffix
           .replace(/{location}/g, location)
           .replace(/{action}/g, action);
       },
       questionTemplate: (name: string, item: string) => {
         const template = getTranslation('wordProblems.subtractionCount.questionTemplate');
-        const itemWithAccusative = addTurkishAccusative(item);
-        return template.replace(/{item}/g, itemWithAccusative);
+        // In "kaldı" question with numerals, items should remain in base form (no suffix)
+        return template.replace(/{item}/g, item); // Base form, no suffix
       },
       generate: () => {
         const locationOptions = (messages?.wordProblems?.subtractionCount?.location?.[locale] || messages?.wordProblems?.subtractionCount?.location?.en) as string[] || [];
