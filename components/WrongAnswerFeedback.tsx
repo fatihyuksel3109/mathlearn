@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 
 interface WrongAnswerFeedbackProps {
@@ -17,18 +17,46 @@ export default function WrongAnswerFeedback({
 }: WrongAnswerFeedbackProps) {
   const t = useTranslations();
   const [isVisible, setIsVisible] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const hideCallbackRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
+    // Clear any existing timers
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    if (hideCallbackRef.current) {
+      clearTimeout(hideCallbackRef.current);
+      hideCallbackRef.current = null;
+    }
+
     if (show) {
       setIsVisible(true);
-      const timer = setTimeout(() => {
+      timerRef.current = setTimeout(() => {
         setIsVisible(false);
         if (onHide) {
-          setTimeout(onHide, 500); // Wait for animation to complete
+          hideCallbackRef.current = setTimeout(() => {
+            onHide();
+          }, 500); // Wait for animation to complete
         }
       }, duration);
-      return () => clearTimeout(timer);
+    } else {
+      // Reset visibility when show becomes false
+      setIsVisible(false);
     }
+
+    // Cleanup function
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+      if (hideCallbackRef.current) {
+        clearTimeout(hideCallbackRef.current);
+        hideCallbackRef.current = null;
+      }
+    };
   }, [show, duration, onHide]);
 
   return (

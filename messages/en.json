@@ -26,7 +26,16 @@
     "noGames": "No games played yet. Start playing to see your progress here!",
     "noPlayers": "No players yet. Be the first to play!",
     "games": "games",
-    "refresh": "Refresh"
+    "refresh": "Refresh",
+    "days": {
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
+    }
   },
   "navigation": {
     "dashboard": "Dashboard",

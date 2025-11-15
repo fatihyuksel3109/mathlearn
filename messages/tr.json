@@ -26,7 +26,16 @@
     "noGames": "Henüz oyun oynanmadı. İlerlemenizi görmek için oynamaya başlayın!",
     "noPlayers": "Henüz oyuncu yok. İlk oyuncu siz olun!",
     "games": "oyun",
-    "refresh": "Yenile"
+    "refresh": "Yenile",
+    "days": {
+      "sun": "Paz",
+      "mon": "Pzt",
+      "tue": "Sal",
+      "wed": "Çar",
+      "thu": "Per",
+      "fri": "Cum",
+      "sat": "Cmt"
+    }
   },
   "navigation": {
     "dashboard": "Ana Sayfa",

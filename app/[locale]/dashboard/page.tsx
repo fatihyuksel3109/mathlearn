@@ -97,16 +97,32 @@ export default function DashboardPage() {
     { name: t('games.wordStories.name'), href: `/${locale}/games/word-stories`, icon: '📖', color: 'bg-pastel-blue' },
   ];
 
+  // Map English day names to translation keys
+  const dayNameMap: Record<string, string> = {
+    'Sun': t('common.days.sun'),
+    'Mon': t('common.days.mon'),
+    'Tue': t('common.days.tue'),
+    'Wed': t('common.days.wed'),
+    'Thu': t('common.days.thu'),
+    'Fri': t('common.days.fri'),
+    'Sat': t('common.days.sat'),
+  };
+
   // Use chart data from API, fallback to empty if not available
-  const displayChartData = chartData.length > 0 ? chartData : [
-    { date: 'Mon', xp: 0 },
-    { date: 'Tue', xp: 0 },
-    { date: 'Wed', xp: 0 },
-    { date: 'Thu', xp: 0 },
-    { date: 'Fri', xp: 0 },
-    { date: 'Sat', xp: 0 },
-    { date: 'Sun', xp: 0 },
-  ];
+  const displayChartData = chartData.length > 0 
+    ? chartData.map(item => ({
+        ...item,
+        date: dayNameMap[item.date] || item.date
+      }))
+    : [
+        { date: t('common.days.mon'), xp: 0 },
+        { date: t('common.days.tue'), xp: 0 },
+        { date: t('common.days.wed'), xp: 0 },
+        { date: t('common.days.thu'), xp: 0 },
+        { date: t('common.days.fri'), xp: 0 },
+        { date: t('common.days.sat'), xp: 0 },
+        { date: t('common.days.sun'), xp: 0 },
+      ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pastel-pink via-pastel-purple to-pastel-blue">
