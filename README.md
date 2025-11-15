@@ -27,7 +27,13 @@ A colorful, animated math learning application built with Next.js for elementary
 - 🔐 **User Authentication**
   - NextAuth with credentials
   - Secure password hashing
+  - Email verification with OTP (6-digit code, 5 minutes validity)
   - User profiles with avatars
+  
+- 🌐 **Internationalization**
+  - Multi-language support (Turkish/English)
+  - Localized error messages
+  - Language switching
 
 ## Tech Stack
 
@@ -37,6 +43,8 @@ A colorful, animated math learning application built with Next.js for elementary
 - **Animations**: Framer Motion
 - **Database**: MongoDB with Mongoose
 - **Authentication**: NextAuth.js
+- **Email Service**: Nodemailer (SMTP)
+- **Internationalization**: next-intl
 - **State Management**: Zustand
 - **Charts**: Recharts
 - **Drag & Drop**: @dnd-kit
@@ -73,7 +81,19 @@ NEXTAUTH_SECRET=your-secret-key-here
 MONGODB_URI=mongodb://localhost:27017/mathlearn
 # Or for MongoDB Atlas:
 # MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/mathlearn
+
+# Email Configuration (for OTP verification)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password
 ```
+
+**Note**: For Gmail, you need to generate an App Password (not your regular password):
+1. Go to your Google Account settings
+2. Enable 2-Step Verification
+3. Generate an App Password
+4. Use the generated password in `SMTP_PASS`
 
 4. Run the development server:
 ```bash
@@ -87,15 +107,32 @@ npm run dev
 ```
 /app
   /api              # API routes
-  /games            # Game pages
-  /dashboard        # Dashboard page
-  /leaderboard      # Leaderboard page
-  /profile          # Profile page
-  /login            # Login page
-  /signup           # Signup page
+    /auth           # Authentication endpoints
+      /otp          # OTP verification endpoints
+    /game           # Game-related endpoints
+    /user           # User management endpoints
+    /badges         # Badge system endpoints
+    /leaderboard    # Leaderboard endpoint
+    /level          # Level completion endpoint
+  /[locale]         # Localized pages (en/tr)
+    /dashboard      # Dashboard page
+    /games          # Game selection page
+    /leaderboard    # Leaderboard page
+    /profile        # Profile page
+    /login          # Login page
+    /signup         # Signup page
+    /verify-email   # Email verification page
 /components         # React components
-/lib                # Utilities and stores
+/lib                # Utilities and services
+  /emailService.ts  # Email service (nodemailer)
 /models             # Mongoose models
+  /User.ts         # User model
+  /OTP.ts          # OTP model
+  /GameSession.ts  # Game session model
+  /LevelProgress.ts # Level progress model
+/messages           # Translation files
+  /en.json         # English translations
+  /tr.json         # Turkish translations
 ```
 
 ## Available Scripts
@@ -118,18 +155,60 @@ npm run dev
 
 ### User Features
 
-- Create account and login
-- Choose from 6 cute avatars
-- Track XP and daily streaks
-- Earn badges for achievements
-- View progress charts
-- Compete on leaderboard
+- **Account Management**
+  - Create account with email verification
+  - Secure login with credentials
+  - Email verification via OTP (One-Time Password)
+  - Choose from 6 cute avatars
+  - Multi-language interface (Turkish/English)
+  
+- **Progress Tracking**
+  - Track XP and daily streaks
+  - Earn badges for achievements
+  - View progress charts
+  - Compete on leaderboard
+  
+- **Security**
+  - Email verification required before login
+  - 6-digit OTP codes with 5-minute expiration
+  - Secure password hashing with bcrypt
+  - Protected API routes
 
 ## Database Models
 
-- **User**: Stores user information, XP, streaks, badges
+- **User**: Stores user information, XP, streaks, badges, verification status
+- **OTP**: Stores email verification codes with expiration dates
 - **GameSession**: Tracks game plays and results
 - **LevelProgress**: Tracks level completion and stars
+
+## Authentication Flow
+
+1. **Signup**: User creates account with name, email, and password
+2. **OTP Email**: System sends 6-digit verification code to user's email (valid for 5 minutes)
+3. **Email Verification**: User enters OTP code on verification page
+4. **Account Activation**: Once verified, user can login
+5. **Login**: User logs in with email and password (verified users only)
+
+## API Routes
+
+### Authentication
+- `POST /api/auth/signup` - Create new user account
+- `POST /api/auth/otp/send` - Send OTP verification code
+- `POST /api/auth/otp/verify` - Verify OTP code
+- `POST /api/auth/[...nextauth]` - NextAuth authentication endpoints
+
+### User
+- `GET /api/user` - Get user information
+- `POST /api/user/avatar` - Update user avatar
+
+### Games
+- `POST /api/game/start` - Start a game session
+- `POST /api/game/submit` - Submit game results
+
+### Other
+- `GET /api/leaderboard` - Get leaderboard data
+- `POST /api/badges/check` - Check for badge achievements
+- `POST /api/level/complete` - Mark level as complete
 
 ## Contributing
 
