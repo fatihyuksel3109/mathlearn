@@ -4,25 +4,41 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations, useLocale } from 'next-intl';
-import { DndContext, DragEndEvent, useDroppable } from '@dnd-kit/core';
-import FractionBlock from '@/components/FractionBlock';
 import { generateFractionQuestion } from '@/lib/gameUtils';
 import NavigationBar from '@/components/NavigationBar';
 
-function DroppableSlot({ id, filled }: { id: string; filled: boolean }) {
-  const { setNodeRef, isOver } = useDroppable({ id });
-
+function SlotBox({ 
+  id, 
+  filled, 
+  selectedBlock, 
+  onClick 
+}: { 
+  id: string; 
+  filled: boolean;
+  selectedBlock: boolean;
+  onClick: () => void;
+}) {
   return (
-    <div
-      ref={setNodeRef}
-      className={`w-16 h-16 rounded-xl border-4 ${
-        isOver
-          ? 'bg-cute-accent border-cute-primary'
-          : filled
-          ? 'bg-cute-accent border-cute-primary'
-          : 'bg-gray-200 border-gray-400'
-      } transition-colors`}
-    />
+    <motion.button
+      onClick={onClick}
+      disabled={filled}
+      whileHover={!filled ? { scale: 1.1 } : {}}
+      whileTap={!filled ? { scale: 0.9 } : {}}
+      className={`w-16 h-16 rounded-xl border-4 transition-colors touch-manipulation ${
+        filled
+          ? 'bg-cute-accent border-cute-primary cursor-default'
+          : selectedBlock
+          ? 'bg-pastel-blue border-cute-accent'
+          : 'bg-gray-200 border-gray-400 hover:bg-gray-300'
+      }`}
+      style={{ WebkitTapHighlightColor: 'transparent' }}
+    >
+      {filled && (
+        <div className="w-full h-full flex items-center justify-center text-2xl text-cute-primary">
+          ✓
+        </div>
+      )}
+    </motion.button>
   );
 }
 
@@ -37,6 +53,7 @@ export default function FractionsPage() {
   const [blocks, setBlocks] = useState<Array<{ id: string; filled: boolean }>>(
     Array(target.numerator).fill(null).map((_, i) => ({ id: `block-${i}`, filled: true }))
   );
+  const [selectedBlock, setSelectedBlock] = useState<boolean>(false);
   const [completed, setCompleted] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [startTime, setStartTime] = useState(0);
@@ -92,29 +109,27 @@ export default function FractionsPage() {
     };
   }, []);
 
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
+  const handleBlockClick = () => {
+    if (blocks.length === 0) return;
+    setSelectedBlock(true);
+  };
 
-    if (!over) return;
+  const handleSlotClick = (slotIndex: number) => {
+    if (!selectedBlock || slots[slotIndex].filled) return;
 
-    const blockId = active.id as string;
-    const slotId = over.id as string;
+    const newSlots = [...slots];
+    newSlots[slotIndex].filled = true;
+    setSlots(newSlots);
 
-    if (slotId.startsWith('slot-')) {
-      const slotIndex = parseInt(slotId.split('-')[1]);
-      const newSlots = [...slots];
-      newSlots[slotIndex].filled = true;
-      setSlots(newSlots);
+    const newBlocks = blocks.slice(1); // Remove first block
+    setBlocks(newBlocks);
+    setSelectedBlock(false);
 
-      const newBlocks = blocks.filter((b) => b.id !== blockId);
-      setBlocks(newBlocks);
-
-      // Check if complete
-      const filledCount = newSlots.filter((s) => s.filled).length;
-      if (filledCount === target.numerator) {
-        setCompleted(true);
-        setCorrectCount(correctCount + 1);
-      }
+    // Check if complete
+    const filledCount = newSlots.filter((s) => s.filled).length;
+    if (filledCount === target.numerator) {
+      setCompleted(true);
+      setCorrectCount(correctCount + 1);
     }
   };
 
@@ -151,6 +166,7 @@ export default function FractionsPage() {
         .fill(null)
         .map((_, i) => ({ id: `block-${i}`, filled: true }))
     );
+    setSelectedBlock(false);
     setCompleted(false);
   };
 
@@ -182,32 +198,53 @@ export default function FractionsPage() {
             </p>
           </div>
 
-          <DndContext onDragEnd={handleDragEnd}>
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-bold text-cute-primary mb-4">{t('games.fractions.dragBlocks')}</h3>
-                <div className="flex gap-4 flex-wrap">
-                  {blocks.map((block) => (
-                    <FractionBlock
-                      key={block.id}
-                      id={block.id}
-                      filled={block.filled}
-                      total={target.denominator}
-                    />
-                  ))}
-                </div>
-              </div>
+          {selectedBlock && (
+            <div className="text-center mb-4 text-lg text-cute-primary font-bold">
+              {t('games.fractions.selectedBlock')}
+            </div>
+          )}
 
-              <div>
-                <h3 className="text-2xl font-bold text-cute-primary mb-4">{t('games.fractions.dropHere')}</h3>
-                <div className="flex gap-4 flex-wrap">
-                  {slots.map((slot) => (
-                    <DroppableSlot key={slot.id} id={slot.id} filled={slot.filled} />
-                  ))}
-                </div>
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-2xl font-bold text-cute-primary mb-4">{t('games.fractions.dragBlocks')}</h3>
+              <div className="flex gap-4 flex-wrap">
+                {blocks.length > 0 ? (
+                  <motion.button
+                    onClick={handleBlockClick}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className={`w-16 h-16 rounded-xl border-4 cursor-pointer cute-shadow transition-colors touch-manipulation ${
+                      selectedBlock
+                        ? 'bg-pastel-blue border-cute-accent'
+                        : 'bg-cute-accent border-cute-primary hover:bg-pastel-pink'
+                    }`}
+                    style={{ WebkitTapHighlightColor: 'transparent' }}
+                  >
+                    <div className="w-full h-full flex items-center justify-center text-2xl text-cute-primary">
+                      ✓
+                    </div>
+                  </motion.button>
+                ) : (
+                  <div className="text-gray-400 text-lg">{t('games.fractions.allBlocksPlaced')}</div>
+                )}
               </div>
             </div>
-          </DndContext>
+
+            <div>
+              <h3 className="text-2xl font-bold text-cute-primary mb-4">{t('games.fractions.dropHere')}</h3>
+              <div className="flex gap-4 flex-wrap">
+                {slots.map((slot, index) => (
+                  <SlotBox
+                    key={slot.id}
+                    id={slot.id}
+                    filled={slot.filled}
+                    selectedBlock={selectedBlock}
+                    onClick={() => handleSlotClick(index)}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
 
           <AnimatePresence>
             {completed && (

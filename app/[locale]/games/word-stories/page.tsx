@@ -88,10 +88,7 @@ export default function WordStoriesPage() {
       setCorrect(false);
       setWrongCount(wrongCount + 1);
     }
-    // Add delay before showing feedback so question stays visible longer
-    setTimeout(() => {
-      setShowFeedback(true);
-    }, 2000); // 2 second delay
+    setShowFeedback(true);
   };
 
   const submitGameResults = async () => {
@@ -160,20 +157,6 @@ export default function WordStoriesPage() {
                 </div>
               </div>
               <AnswerButtons options={problem.options} onAnswer={handleAnswer} />
-            </motion.div>
-          ) : !showFeedback ? (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <div className="bg-gradient-to-br from-pastel-yellow to-pastel-peach rounded-2xl p-8 cute-border border-4 border-cute-primary mb-8">
-                <div className="text-3xl font-bold text-cute-primary mb-4">
-                  {problem.question}
-                </div>
-              </div>
-              <div className="text-center text-xl text-gray-600">
-                {t('common.thinking')}
-              </div>
             </motion.div>
           ) : (
             <motion.div

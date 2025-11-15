@@ -11,14 +11,15 @@ interface AnswerButtonsProps {
 export default function AnswerButtons({ options, onAnswer, disabled = false }: AnswerButtonsProps) {
   return (
     <div className="grid grid-cols-2 gap-4 mt-8">
-      {options.map((option, index) => (
+      {options.map((option) => (
         <motion.button
-          key={index}
+          key={`option-${option}`}
           whileHover={{ scale: 1.05, y: -5 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => !disabled && onAnswer(option)}
           disabled={disabled}
-          className="bg-white cute-border border-4 border-cute-primary px-8 py-6 rounded-2xl text-2xl font-bold text-cute-primary cute-shadow hover:bg-pastel-pink transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="bg-white cute-border border-4 border-cute-primary px-8 py-6 rounded-2xl text-2xl font-bold text-cute-primary cute-shadow hover:bg-pastel-pink active:bg-pastel-pink transition-colors disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
+          style={{ WebkitTapHighlightColor: 'transparent' }}
         >
           {option}
         </motion.button>

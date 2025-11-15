@@ -4,23 +4,47 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations, useLocale } from 'next-intl';
-import { DndContext, DragEndEvent, useDroppable } from '@dnd-kit/core';
-import ShapeCard from '@/components/ShapeCard';
 import { generateGeometryQuestion } from '@/lib/gameUtils';
 import NavigationBar from '@/components/NavigationBar';
 
-function DroppableTarget({ id, label }: { id: string; label: string }) {
-  const { setNodeRef, isOver } = useDroppable({ id });
+function TargetBox({ 
+  id, 
+  label, 
+  shapeId, 
+  selectedShape, 
+  onClick 
+}: { 
+  id: string; 
+  label: string; 
+  shapeId: string | null;
+  selectedShape: string | null;
+  onClick: () => void;
+}) {
+  const isSelected = selectedShape !== null && shapeId === null;
+  const hasShape = shapeId !== null;
 
   return (
-    <div
-      ref={setNodeRef}
-      className={`bg-white cute-border border-4 rounded-2xl p-6 text-center min-h-[150px] flex items-center justify-center ${
-        isOver ? 'bg-pastel-green border-cute-accent' : 'border-cute-primary'
-      } transition-colors`}
+    <motion.button
+      onClick={onClick}
+      disabled={hasShape}
+      whileHover={!hasShape ? { scale: 1.05 } : {}}
+      whileTap={!hasShape ? { scale: 0.95 } : {}}
+      className={`bg-white cute-border border-4 rounded-2xl p-6 text-center min-h-[150px] flex flex-col items-center justify-center transition-colors touch-manipulation ${
+        hasShape
+          ? 'bg-pastel-green border-cute-accent cursor-default'
+          : isSelected
+          ? 'bg-pastel-blue border-cute-accent'
+          : 'border-cute-primary hover:bg-pastel-pink'
+      }`}
+      style={{ WebkitTapHighlightColor: 'transparent' }}
     >
+      {hasShape ? (
+        <div className="text-5xl mb-2">
+          {shapeId === 'triangle' ? '🔺' : shapeId === 'square' ? '⬜' : '⭕'}
+        </div>
+      ) : null}
       <div className="text-xl font-bold text-cute-primary">{label}</div>
-    </div>
+    </motion.button>
   );
 }
 
@@ -34,6 +58,7 @@ export default function GeometryPage() {
     { id: 'target-4', label: '4 equal sides', shapeId: null as string | null },
     { id: 'target-0', label: 'Round shape', shapeId: null as string | null },
   ]);
+  const [selectedShape, setSelectedShape] = useState<string | null>(null);
   const [completed, setCompleted] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [startTime, setStartTime] = useState(0);
@@ -95,28 +120,35 @@ export default function GeometryPage() {
     { id: 'circle', name: 'Circle', emoji: '⭕', sides: 0 },
   ];
 
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
+  const handleShapeClick = (shapeId: string) => {
+    // If clicking the same shape, deselect it
+    if (selectedShape === shapeId) {
+      setSelectedShape(null);
+    } else {
+      setSelectedShape(shapeId);
+    }
+  };
 
-    if (!over) return;
+  const handleTargetClick = (targetId: string) => {
+    if (!selectedShape) return;
 
-    const shapeId = active.id as string;
-    const targetId = over.id as string;
-
-    const shape = shapeData.find((s) => s.id === shapeId);
+    const shape = shapeData.find((s) => s.id === selectedShape);
     if (!shape) return;
+
+    const target = targets.find((t) => t.id === targetId);
+    if (!target || target.shapeId !== null) return;
+
+    // Check if correct match
+    const isCorrect =
+      (targetId === 'target-3' && shape.sides === 3) ||
+      (targetId === 'target-4' && shape.sides === 4) ||
+      (targetId === 'target-0' && shape.sides === 0);
 
     const newTargets = targets.map((target) => {
       if (target.id === targetId) {
-        // Check if correct match
-        const isCorrect =
-          (target.id === 'target-3' && shape.sides === 3) ||
-          (target.id === 'target-4' && shape.sides === 4) ||
-          (target.id === 'target-0' && shape.sides === 0);
-
         if (isCorrect) {
           setCorrectCount(correctCount + 1);
-          return { ...target, shapeId };
+          return { ...target, shapeId: selectedShape };
         } else {
           setWrongCount(wrongCount + 1);
         }
@@ -125,6 +157,7 @@ export default function GeometryPage() {
     });
 
     setTargets(newTargets);
+    setSelectedShape(null);
 
     // Check if all matched
     if (newTargets.every((t) => t.shapeId !== null)) {
@@ -158,6 +191,7 @@ export default function GeometryPage() {
       { id: 'target-4', label: '4 equal sides', shapeId: null },
       { id: 'target-0', label: 'Round shape', shapeId: null },
     ]);
+    setSelectedShape(null);
     setCompleted(false);
   };
 
@@ -183,32 +217,56 @@ export default function GeometryPage() {
           <p className="text-center text-xl text-gray-700 mb-8">
             {t('games.geometry.instructions')}
           </p>
+          {selectedShape && (
+            <div className="text-center mb-4 text-lg text-cute-primary font-bold">
+              {t('games.geometry.selectedShape', { shape: shapeData.find(s => s.id === selectedShape)?.name })}
+            </div>
+          )}
 
-          <DndContext onDragEnd={handleDragEnd}>
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-bold text-cute-primary mb-4">{t('games.geometry.shapes')}</h3>
-                <div className="flex gap-4 flex-wrap">
-                  {shapeData.map((shape) => {
-                    const isPlaced = targets.some((t) => t.shapeId === shape.id);
-                    if (isPlaced) return null;
-                    return (
-                      <ShapeCard key={shape.id} id={shape.id} name={shape.name} emoji={shape.emoji} />
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-bold text-cute-primary mb-4">{t('games.geometry.dropTargets')}</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {targets.map((target) => (
-                    <DroppableTarget key={target.id} id={target.id} label={target.label} />
-                  ))}
-                </div>
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-2xl font-bold text-cute-primary mb-4">{t('games.geometry.shapes')}</h3>
+              <div className="flex gap-4 flex-wrap">
+                {shapeData.map((shape) => {
+                  const isPlaced = targets.some((t) => t.shapeId === shape.id);
+                  if (isPlaced) return null;
+                  return (
+                    <motion.button
+                      key={shape.id}
+                      onClick={() => handleShapeClick(shape.id)}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`bg-white cute-border border-4 rounded-2xl p-6 cursor-pointer cute-shadow transition-colors touch-manipulation ${
+                        selectedShape === shape.id
+                          ? 'bg-pastel-blue border-cute-accent'
+                          : 'border-cute-primary hover:bg-pastel-pink'
+                      }`}
+                      style={{ WebkitTapHighlightColor: 'transparent' }}
+                    >
+                      <div className="text-5xl mb-2">{shape.emoji}</div>
+                      <div className="text-lg font-bold text-cute-primary">{shape.name}</div>
+                    </motion.button>
+                  );
+                })}
               </div>
             </div>
-          </DndContext>
+
+            <div>
+              <h3 className="text-2xl font-bold text-cute-primary mb-4">{t('games.geometry.dropTargets')}</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {targets.map((target) => (
+                  <TargetBox
+                    key={target.id}
+                    id={target.id}
+                    label={target.label}
+                    shapeId={target.shapeId}
+                    selectedShape={selectedShape}
+                    onClick={() => handleTargetClick(target.id)}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
 
           <AnimatePresence>
             {completed && (
