@@ -10,6 +10,7 @@ import { generateRaceQuestion } from '@/lib/gameUtils';
 import GameTimer from '@/components/GameTimer';
 import AnswerButtons from '@/components/AnswerButtons';
 import NavigationBar from '@/components/NavigationBar';
+import WrongAnswerFeedback from '@/components/WrongAnswerFeedback';
 
 export default function QuickRacePage() {
   const router = useRouter();
@@ -29,6 +30,7 @@ export default function QuickRacePage() {
     timestamp: Date;
   }>>([]);
   const [questionStartTime, setQuestionStartTime] = useState(0);
+  const [showWrongFeedback, setShowWrongFeedback] = useState(false);
 
   useEffect(() => {
     reset();
@@ -72,13 +74,16 @@ export default function QuickRacePage() {
     if (isCorrect) {
       incrementCorrect();
       setQuestion(generateRaceQuestion(correct + 1));
+      // Start timer for next question
+      setQuestionStartTime(answerTime);
     } else {
       incrementWrong();
-      setQuestion(generateRaceQuestion(correct + 1));
+      setShowWrongFeedback(true);
+      // End game on wrong answer
+      setTimeout(() => {
+        handleTimerComplete();
+      }, 2000);
     }
-
-    // Start timer for next question
-    setQuestionStartTime(answerTime);
   };
 
   const handleTimerComplete = async () => {
@@ -133,6 +138,11 @@ export default function QuickRacePage() {
       {typeof window !== 'undefined' && showConfetti && (
         <Confetti width={window.innerWidth} height={window.innerHeight} />
       )}
+      
+      <WrongAnswerFeedback 
+        show={showWrongFeedback} 
+        onHide={() => setShowWrongFeedback(false)}
+      />
       
       <div className="max-w-4xl mx-auto px-4 py-8">
         <motion.div
@@ -210,7 +220,7 @@ export default function QuickRacePage() {
           ) : (
             <>
               <div className="flex justify-center mb-8">
-                <GameTimer duration={60} onComplete={handleTimerComplete} />
+                <GameTimer duration={60} onComplete={handleTimerComplete} paused={gameOver || showWrongFeedback} />
               </div>
 
               <div className="text-center mb-8">
@@ -222,7 +232,7 @@ export default function QuickRacePage() {
                 </div>
               </div>
 
-              <AnswerButtons options={question.options} onAnswer={handleAnswer} />
+              <AnswerButtons options={question.options} onAnswer={handleAnswer} disabled={gameOver || showWrongFeedback} />
             </>
           )}
         </motion.div>

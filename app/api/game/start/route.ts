@@ -12,7 +12,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { gameType, difficulty = 1 } = await request.json();
+    const { gameType, difficulty = 1, levelId } = await request.json();
 
     if (!gameType) {
       return NextResponse.json({ error: 'Game type is required' }, { status: 400 });
@@ -24,6 +24,7 @@ export async function POST(request: Request) {
       userId: (session.user as any).id,
       gameType,
       difficulty,
+      levelId: levelId || undefined,
       correct: 0,
       wrong: 0,
       timeSpent: 0,

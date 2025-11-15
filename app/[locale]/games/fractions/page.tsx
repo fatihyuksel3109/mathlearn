@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations, useLocale } from 'next-intl';
 import { generateFractionQuestion } from '@/lib/gameUtils';
 import NavigationBar from '@/components/NavigationBar';
+import WrongAnswerFeedback from '@/components/WrongAnswerFeedback';
 
 function SlotBox({ 
   id, 
@@ -55,6 +56,8 @@ export default function FractionsPage() {
   );
   const [selectedBlock, setSelectedBlock] = useState<boolean>(false);
   const [completed, setCompleted] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+  const [showWrongFeedback, setShowWrongFeedback] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [startTime, setStartTime] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
@@ -178,6 +181,11 @@ export default function FractionsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-pastel-purple via-pastel-pink to-pastel-blue">
       <NavigationBar />
+      
+      <WrongAnswerFeedback 
+        show={showWrongFeedback} 
+        onHide={() => setShowWrongFeedback(false)}
+      />
       
       <div className="max-w-4xl mx-auto px-4 py-8">
         <motion.div

@@ -9,6 +9,7 @@ import { useGameStore } from '@/lib/gameStore';
 import { generateBalloonQuestion } from '@/lib/gameUtils';
 import Balloon from '@/components/Balloon';
 import NavigationBar from '@/components/NavigationBar';
+import WrongAnswerFeedback from '@/components/WrongAnswerFeedback';
 
 const TOTAL_BALLOONS = 10;
 
@@ -25,6 +26,7 @@ export default function BalloonPopPage() {
   const [targetCorrect, setTargetCorrect] = useState(TOTAL_BALLOONS);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [startTime, setStartTime] = useState(0);
+  const [showWrongFeedback, setShowWrongFeedback] = useState(false);
   const [questionAnswers, setQuestionAnswers] = useState<Array<{
     questionType: string;
     isCorrect: boolean;
@@ -145,6 +147,16 @@ export default function BalloonPopPage() {
       prev.map((b) => (b.id === balloonId ? { ...b, popped: true } : b))
     );
     
+    if (!correct) {
+      incrementWrong(); // Track wrong answer before ending game
+      setShowWrongFeedback(true);
+      // End game on wrong answer
+      setTimeout(() => {
+        handleGameComplete();
+      }, 2000);
+      return; // Don't continue processing
+    }
+    
     // Track question answer (use operation type for badge tracking)
     const answerTime = Date.now();
     const timeSpent = (answerTime - startTime) / 1000; // Time from game start
@@ -193,6 +205,11 @@ export default function BalloonPopPage() {
       {typeof window !== 'undefined' && showConfetti && (
         <Confetti width={window.innerWidth} height={window.innerHeight} />
       )}
+      
+      <WrongAnswerFeedback 
+        show={showWrongFeedback} 
+        onHide={() => setShowWrongFeedback(false)}
+      />
       
       <div className="max-w-6xl mx-auto px-4 py-8">
         <motion.div

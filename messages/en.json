@@ -32,6 +32,7 @@
     "dashboard": "Dashboard",
     "games": "Games",
     "leaderboard": "Leaderboard",
+    "badges": "Badges",
     "profile": "Profile",
     "login": "Login",
     "logout": "Logout",
@@ -202,6 +203,8 @@
       "dropTargets": "Select a target:",
       "selectedShape": "Selected: {shape}",
       "excellent": "Excellent!",
+      "gameOver": "Game Over",
+      "wrongAnswerEndsGame": "Wrong answer ends the game!",
       "playAgain": "Play Again",
       "reset": "Reset",
       "dashboard": "Dashboard"
@@ -288,6 +291,7 @@
   "feedback": {
     "correct": "Correct!",
     "incorrect": "Not quite right",
+    "wrong": "WRONG!",
     "tryAgain": "Try Again",
     "wellDone": "Well Done!",
     "keepGoing": "Keep Going!",

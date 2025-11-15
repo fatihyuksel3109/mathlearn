@@ -19,6 +19,7 @@ export default function NavigationBar() {
     { href: `/${locale}/dashboard`, label: t('navigation.dashboard'), icon: '🏠' },
     { href: `/${locale}/games`, label: t('navigation.games'), icon: '🎮' },
     { href: `/${locale}/leaderboard`, label: t('navigation.leaderboard'), icon: '🏆' },
+    { href: `/${locale}/rozet`, label: t('navigation.badges'), icon: '🏅' },
     { href: `/${locale}/profile`, label: t('navigation.profile'), icon: '👤' },
   ];
 

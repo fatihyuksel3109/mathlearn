@@ -7,12 +7,17 @@ interface GameTimerProps {
   duration: number; // in seconds
   onComplete: () => void;
   className?: string;
+  paused?: boolean; // Pause the timer
 }
 
-export default function GameTimer({ duration, onComplete, className = '' }: GameTimerProps) {
+export default function GameTimer({ duration, onComplete, className = '', paused = false }: GameTimerProps) {
   const [timeLeft, setTimeLeft] = useState(duration);
 
   useEffect(() => {
+    if (paused) {
+      return; // Don't run timer if paused
+    }
+
     if (timeLeft <= 0) {
       onComplete();
       return;
@@ -29,7 +34,7 @@ export default function GameTimer({ duration, onComplete, className = '' }: Game
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLeft, onComplete]);
+  }, [timeLeft, onComplete, paused]);
 
   const percentage = (timeLeft / duration) * 100;
   const isLowTime = timeLeft <= 10;

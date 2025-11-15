@@ -7,6 +7,7 @@ import { useTranslations, useLocale, useMessages } from 'next-intl';
 import { generateWordProblem } from '@/lib/gameUtils';
 import StoryAnimation from '@/components/StoryAnimation';
 import AnswerButtons from '@/components/AnswerButtons';
+import WrongAnswerFeedback from '@/components/WrongAnswerFeedback';
 import NavigationBar from '@/components/NavigationBar';
 
 export default function WordStoriesPage() {
@@ -24,6 +25,7 @@ export default function WordStoriesPage() {
   const [startTime, setStartTime] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [wrongCount, setWrongCount] = useState(0);
+  const [showWrongFeedback, setShowWrongFeedback] = useState(false);
   const correctCountRef = useRef(0);
   const wrongCountRef = useRef(0);
   const sessionIdRef = useRef<string | null>(null);
@@ -79,16 +81,23 @@ export default function WordStoriesPage() {
   };
 
   const handleAnswer = (answer: number) => {
+    if (answered) return; // Prevent multiple answers
     setAnswered(true);
     if (answer === problem.answer) {
       setCorrect(true);
       setScore(score + 10);
       setCorrectCount(correctCount + 1);
+      setShowFeedback(true);
     } else {
       setCorrect(false);
       setWrongCount(wrongCount + 1);
+      setShowWrongFeedback(true);
+      // End game on wrong answer - submit results
+      setTimeout(() => {
+        setShowFeedback(true);
+        submitGameResults();
+      }, 2000);
     }
-    setShowFeedback(true);
   };
 
   const submitGameResults = async () => {
@@ -127,6 +136,11 @@ export default function WordStoriesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-pastel-peach via-pastel-yellow to-pastel-pink">
       <NavigationBar />
+      
+      <WrongAnswerFeedback 
+        show={showWrongFeedback} 
+        onHide={() => setShowWrongFeedback(false)}
+      />
       
       <div className="max-w-4xl mx-auto px-4 py-8">
         <motion.div

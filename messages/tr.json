@@ -32,6 +32,7 @@
     "dashboard": "Ana Sayfa",
     "games": "Oyunlar",
     "leaderboard": "Lider Tablosu",
+    "badges": "Rozetler",
     "profile": "Profil",
     "login": "Giriş",
     "logout": "Çıkış",
@@ -202,6 +203,8 @@
       "dropTargets": "Bir hedef seç:",
       "selectedShape": "Seçildi: {shape}",
       "excellent": "Mükemmel!",
+      "gameOver": "Oyun Bitti",
+      "wrongAnswerEndsGame": "Yanlış cevap oyunu bitirir!",
       "playAgain": "Tekrar Oyna",
       "reset": "Sıfırla",
       "dashboard": "Ana Sayfa"
@@ -288,6 +291,7 @@
   "feedback": {
     "correct": "Doğru!",
     "incorrect": "Tam değil",
+    "wrong": "YANLIŞ!",
     "tryAgain": "Tekrar Dene",
     "wellDone": "Aferin!",
     "keepGoing": "Devam Et!",

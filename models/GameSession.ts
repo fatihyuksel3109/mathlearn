@@ -12,6 +12,7 @@ export interface IGameSession {
   userId: mongoose.Types.ObjectId;
   gameType: string;
   difficulty: number;
+  levelId?: string; // For adventure game levels
   correct: number;
   wrong: number;
   timeSpent: number;
@@ -34,6 +35,10 @@ const GameSessionSchema = new Schema<IGameSession>(
     difficulty: {
       type: Number,
       default: 1,
+    },
+    levelId: {
+      type: String,
+      required: false,
     },
     correct: {
       type: Number,

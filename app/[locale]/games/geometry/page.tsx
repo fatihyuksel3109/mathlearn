@@ -6,19 +6,22 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations, useLocale } from 'next-intl';
 import { generateGeometryQuestion } from '@/lib/gameUtils';
 import NavigationBar from '@/components/NavigationBar';
+import WrongAnswerFeedback from '@/components/WrongAnswerFeedback';
 
 function TargetBox({ 
   id, 
   label, 
   shapeId, 
   selectedShape, 
-  onClick 
+  onClick,
+  disabled
 }: { 
   id: string; 
   label: string; 
   shapeId: string | null;
   selectedShape: string | null;
   onClick: () => void;
+  disabled?: boolean;
 }) {
   const isSelected = selectedShape !== null && shapeId === null;
   const hasShape = shapeId !== null;
@@ -26,11 +29,13 @@ function TargetBox({
   return (
     <motion.button
       onClick={onClick}
-      disabled={hasShape}
-      whileHover={!hasShape ? { scale: 1.05 } : {}}
-      whileTap={!hasShape ? { scale: 0.95 } : {}}
+      disabled={hasShape || disabled}
+      whileHover={!hasShape && !disabled ? { scale: 1.05 } : {}}
+      whileTap={!hasShape && !disabled ? { scale: 0.95 } : {}}
       className={`bg-white cute-border border-4 rounded-2xl p-6 text-center min-h-[150px] flex flex-col items-center justify-center transition-colors touch-manipulation ${
-        hasShape
+        disabled
+          ? 'opacity-50 cursor-not-allowed'
+          : hasShape
           ? 'bg-pastel-green border-cute-accent cursor-default'
           : isSelected
           ? 'bg-pastel-blue border-cute-accent'
@@ -60,6 +65,8 @@ export default function GeometryPage() {
   ]);
   const [selectedShape, setSelectedShape] = useState<string | null>(null);
   const [completed, setCompleted] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+  const [showWrongFeedback, setShowWrongFeedback] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [startTime, setStartTime] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
@@ -121,6 +128,7 @@ export default function GeometryPage() {
   ];
 
   const handleShapeClick = (shapeId: string) => {
+    if (gameOver) return;
     // If clicking the same shape, deselect it
     if (selectedShape === shapeId) {
       setSelectedShape(null);
@@ -130,7 +138,7 @@ export default function GeometryPage() {
   };
 
   const handleTargetClick = (targetId: string) => {
-    if (!selectedShape) return;
+    if (!selectedShape || gameOver) return;
 
     const shape = shapeData.find((s) => s.id === selectedShape);
     if (!shape) return;
@@ -151,6 +159,12 @@ export default function GeometryPage() {
           return { ...target, shapeId: selectedShape };
         } else {
           setWrongCount(wrongCount + 1);
+          setShowWrongFeedback(true);
+          // End game on wrong answer
+          setTimeout(() => {
+            setGameOver(true);
+            submitGameResults();
+          }, 2000);
         }
       }
       return target;
@@ -193,6 +207,8 @@ export default function GeometryPage() {
     ]);
     setSelectedShape(null);
     setCompleted(false);
+    setGameOver(false);
+    setShowWrongFeedback(false);
   };
 
   const handleDashboard = async () => {
@@ -203,6 +219,11 @@ export default function GeometryPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-pastel-green via-pastel-blue to-pastel-yellow">
       <NavigationBar />
+      
+      <WrongAnswerFeedback 
+        show={showWrongFeedback} 
+        onHide={() => setShowWrongFeedback(false)}
+      />
       
       <div className="max-w-6xl mx-auto px-4 py-8">
         <motion.div
@@ -236,10 +257,13 @@ export default function GeometryPage() {
                     <motion.button
                       key={shape.id}
                       onClick={() => handleShapeClick(shape.id)}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
+                      disabled={gameOver}
+                      whileHover={!gameOver ? { scale: 1.05 } : {}}
+                      whileTap={!gameOver ? { scale: 0.95 } : {}}
                       className={`bg-white cute-border border-4 rounded-2xl p-6 cursor-pointer cute-shadow transition-colors touch-manipulation ${
-                        selectedShape === shape.id
+                        gameOver
+                          ? 'opacity-50 cursor-not-allowed'
+                          : selectedShape === shape.id
                           ? 'bg-pastel-blue border-cute-accent'
                           : 'border-cute-primary hover:bg-pastel-pink'
                       }`}
@@ -253,21 +277,58 @@ export default function GeometryPage() {
               </div>
             </div>
 
-            <div>
-              <h3 className="text-2xl font-bold text-cute-primary mb-4">{t('games.geometry.dropTargets')}</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {targets.map((target) => (
-                  <TargetBox
-                    key={target.id}
-                    id={target.id}
-                    label={target.label}
-                    shapeId={target.shapeId}
-                    selectedShape={selectedShape}
-                    onClick={() => handleTargetClick(target.id)}
-                  />
-                ))}
+            {!gameOver && (
+              <div>
+                <h3 className="text-2xl font-bold text-cute-primary mb-4">{t('games.geometry.dropTargets')}</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {targets.map((target) => (
+                    <TargetBox
+                      key={target.id}
+                      id={target.id}
+                      label={target.label}
+                      shapeId={target.shapeId}
+                      selectedShape={selectedShape}
+                      onClick={() => handleTargetClick(target.id)}
+                      disabled={gameOver}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
+            
+            {gameOver && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center mt-8"
+              >
+                <div className="text-6xl mb-4">😊</div>
+                <h2 className="text-3xl font-bold text-cute-primary mb-4">
+                  {t('games.geometry.gameOver')}
+                </h2>
+                <p className="text-xl text-gray-600 mb-4">
+                  {t('games.geometry.wrongAnswerEndsGame')}
+                </p>
+                <div className="flex gap-4 justify-center">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={resetGame}
+                    className="bg-cute-primary text-white px-6 py-3 rounded-xl font-bold"
+                  >
+                    {t('games.geometry.playAgain')}
+                  </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={handleDashboard}
+                    className="bg-cute-accent text-white px-6 py-3 rounded-xl font-bold"
+                  >
+                    {t('games.geometry.dashboard')}
+                  </motion.button>
+                </div>
+              </motion.div>
+            )}
           </div>
 
           <AnimatePresence>

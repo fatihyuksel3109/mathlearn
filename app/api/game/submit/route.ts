@@ -23,7 +23,8 @@ export async function POST(request: Request) {
 
     await connectDB();
 
-    const xpEarned = calculateXP(correct);
+    // If user made any wrong answers, they don't earn XP from this session
+    const xpEarned = wrong > 0 ? 0 : calculateXP(correct);
 
     const updateData: any = {
       correct,
