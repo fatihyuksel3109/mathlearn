@@ -219,7 +219,9 @@ export default function GeometryPage() {
           </p>
           {selectedShape && (
             <div className="text-center mb-4 text-lg text-cute-primary font-bold">
-              {t('games.geometry.selectedShape', { shape: shapeData.find(s => s.id === selectedShape)?.name })}
+              {t('games.geometry.selectedShape', { 
+                shape: shapeData.find(s => s.id === selectedShape)?.name || 'Shape' 
+              })}
             </div>
           )}
 

@@ -25,7 +25,8 @@
     "noBadges": "No badges yet. Keep playing to earn badges!",
     "noGames": "No games played yet. Start playing to see your progress here!",
     "noPlayers": "No players yet. Be the first to play!",
-    "games": "games"
+    "games": "games",
+    "refresh": "Refresh"
   },
   "navigation": {
     "dashboard": "Dashboard",

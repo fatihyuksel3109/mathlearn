@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -25,6 +25,19 @@ export default function LeaderboardPage() {
   const [users, setUsers] = useState<LeaderboardUser[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const fetchLeaderboard = useCallback(async () => {
+    try {
+      setLoading(true);
+      const res = await fetch('/api/leaderboard', { cache: 'no-store' });
+      const data = await res.json();
+      setUsers(data.users || []);
+    } catch (error) {
+      console.error('Failed to fetch leaderboard:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (status === 'unauthenticated') {
       router.push(`/${locale}/login`);
@@ -34,19 +47,30 @@ export default function LeaderboardPage() {
     if (status === 'authenticated') {
       fetchLeaderboard();
     }
-  }, [status, router]);
+  }, [status, router, fetchLeaderboard]);
 
-  const fetchLeaderboard = async () => {
-    try {
-      const res = await fetch('/api/leaderboard');
-      const data = await res.json();
-      setUsers(data.users || []);
-    } catch (error) {
-      console.error('Failed to fetch leaderboard:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Refresh leaderboard when page becomes visible (user returns from game)
+  useEffect(() => {
+    if (status !== 'authenticated') return;
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        fetchLeaderboard();
+      }
+    };
+
+    const handleFocus = () => {
+      fetchLeaderboard();
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, [status, fetchLeaderboard]);
 
   if (status === 'loading' || loading) {
     return (
@@ -73,9 +97,20 @@ export default function LeaderboardPage() {
           animate={{ opacity: 1, y: 0 }}
           className="bg-white cute-border cute-shadow rounded-2xl p-8"
         >
-          <h1 className="text-4xl font-bold text-cute-primary text-center mb-8">
-            🏆 {t('pages.leaderboard.title')} 🏆
-          </h1>
+          <div className="flex items-center justify-between mb-8">
+            <h1 className="text-4xl font-bold text-cute-primary">
+              🏆 {t('pages.leaderboard.title')} 🏆
+            </h1>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => fetchLeaderboard()}
+              className="bg-cute-primary text-white px-4 py-2 rounded-xl font-bold text-sm"
+              disabled={loading}
+            >
+              🔄 {t('common.refresh')}
+            </motion.button>
+          </div>
 
           {users.length === 0 ? (
             <div className="text-center py-12">

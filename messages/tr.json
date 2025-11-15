@@ -25,7 +25,8 @@
     "noBadges": "Henüz rozet yok. Rozet kazanmak için oynamaya devam edin!",
     "noGames": "Henüz oyun oynanmadı. İlerlemenizi görmek için oynamaya başlayın!",
     "noPlayers": "Henüz oyuncu yok. İlk oyuncu siz olun!",
-    "games": "oyun"
+    "games": "oyun",
+    "refresh": "Yenile"
   },
   "navigation": {
     "dashboard": "Ana Sayfa",
