@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations, useLocale } from 'next-intl';
@@ -22,7 +22,7 @@ interface Level {
   position: { x: number; y: number };
 }
 
-export default function AdventurePage() {
+function AdventureContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const t = useTranslations();
@@ -338,6 +338,18 @@ export default function AdventurePage() {
         </motion.div>
       </div>
     </div>
+  );
+}
+
+export default function AdventurePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-pastel-yellow via-pastel-peach to-pastel-pink flex items-center justify-center">
+        <div className="text-2xl text-cute-primary">Loading...</div>
+      </div>
+    }>
+      <AdventureContent />
+    </Suspense>
   );
 }
 
