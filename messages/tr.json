@@ -1,0 +1,348 @@
+{
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "success": "Başarılı",
+    "cancel": "İptal",
+    "confirm": "Onayla",
+    "close": "Kapat",
+    "save": "Kaydet",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "back": "Geri",
+    "next": "İleri",
+    "previous": "Önceki",
+    "submit": "Gönder",
+    "thinking": "Düşünüyor...",
+    "correct": "Doğru!",
+    "incorrect": "Tam değil",
+    "correctAnswer": "Doğru cevap {answer}",
+    "score": "Puan",
+    "xp": "XP",
+    "streak": "Günlük seri",
+    "badges": "Rozetler",
+    "totalXP": "Toplam XP",
+    "noBadges": "Henüz rozet yok. Rozet kazanmak için oynamaya devam edin!",
+    "noGames": "Henüz oyun oynanmadı. İlerlemenizi görmek için oynamaya başlayın!",
+    "noPlayers": "Henüz oyuncu yok. İlk oyuncu siz olun!",
+    "games": "oyun"
+  },
+  "navigation": {
+    "dashboard": "Ana Sayfa",
+    "games": "Oyunlar",
+    "leaderboard": "Lider Tablosu",
+    "profile": "Profil",
+    "login": "Giriş",
+    "logout": "Çıkış",
+    "signup": "Kayıt Ol",
+    "language": "Dil"
+  },
+  "pages": {
+    "home": {
+      "title": "MathLearn",
+      "subtitle": "Eğlenceli Oyunlarla Matematik Öğren!",
+      "description": "Renkli ve animasyonlu oyunlarımızla matematik öğrenen binlerce çocuğa katılın. Zamana karşı yarışın, balonları patlatın, bulmacaları çözün ve XP kazanın!",
+      "getStarted": "Başlayalım!",
+      "goToDashboard": "Ana Sayfaya Git"
+    },
+    "dashboard": {
+      "welcome": "Hoş geldin, {name}!",
+      "keepLearning": "Öğrenmeye ve eğlenmeye devam et!",
+      "chooseGame": "Bir Oyun Seç",
+      "recentGames": "Son Oyunlar",
+      "correct": "doğru",
+      "wrong": "yanlış"
+    },
+    "games": {
+      "title": "Oyununu Seç!",
+      "subtitle": "Bir oyun seç ve eğlenceli bir şekilde öğrenmeye başla!",
+      "playNow": "Şimdi Oyna →",
+      "backToDashboard": "← Ana Sayfaya Dön"
+    },
+    "login": {
+      "title": "Tekrar Hoş Geldin!",
+      "email": "E-posta",
+      "password": "Şifre",
+      "loginButton": "Giriş Yap",
+      "loggingIn": "Giriş yapılıyor...",
+      "noAccount": "Hesabın yok mu?",
+      "signUp": "Kayıt ol",
+      "error": "Bir şeyler yanlış gitti. Lütfen tekrar deneyin.",
+      "emailNotVerified": "E-posta doğrulanmadı. Lütfen e-postanı kontrol et.",
+      "noUserFound": "Bu e-posta ile kullanıcı bulunamadı",
+      "invalidPassword": "Geçersiz şifre",
+      "missingCredentials": "Lütfen e-posta ve şifrenizi girin"
+    },
+    "signup": {
+      "title": "Eğlenceye Katıl!",
+      "name": "İsim",
+      "email": "E-posta",
+      "password": "Şifre",
+      "signUpButton": "Kayıt Ol",
+      "creatingAccount": "Hesap oluşturuluyor...",
+      "hasAccount": "Zaten hesabın var mı?",
+      "login": "Giriş yap",
+      "error": "Bir şeyler yanlış gitti. Lütfen tekrar deneyin.",
+      "allFieldsRequired": "Lütfen tüm alanları doldurun",
+      "passwordMinLength": "Şifre en az 6 karakter olmalıdır",
+      "userAlreadyExists": "Bu e-posta ile zaten bir kullanıcı var",
+      "emailSendFailed": "Hesap oluşturuldu ancak doğrulama e-postası gönderilemedi. Lütfen daha sonra tekrar deneyin."
+    },
+    "verifyEmail": {
+      "title": "E-postayı Doğrula",
+      "description": "E-posta adresine gönderilen 6 haneli doğrulama kodunu gir.",
+      "email": "E-posta",
+      "code": "Doğrulama Kodu",
+      "codeHint": "6 haneli kodu gir",
+      "verifyButton": "Doğrula",
+      "verifying": "Doğrulanıyor...",
+      "resendCode": "Kodu Tekrar Gönder",
+      "resending": "Gönderiliyor...",
+      "resendSuccess": "Doğrulama kodu tekrar gönderildi!",
+      "resendError": "Kod gönderilemedi. Lütfen tekrar deneyin.",
+      "success": "E-posta başarıyla doğrulandı! Giriş sayfasına yönlendiriliyorsun...",
+      "error": "Geçersiz veya süresi dolmuş kod. Lütfen tekrar deneyin.",
+      "emailRequired": "E-posta adresi gerekli",
+      "backToLogin": "Giriş sayfasına dön",
+      "login": "Giriş yap"
+    },
+    "profile": {
+      "chooseAvatar": "Avatarını Seç",
+      "yourBadges": "Rozetlerin",
+      "gameProgress": "Oyun İlerlemesi"
+    },
+    "leaderboard": {
+      "title": "Lider Tablosu"
+    },
+    "badges": {
+      "title": "Rozetler",
+      "subtitle": "Tüm rozetleri keşfet ve nasıl kazanılacağını öğren!",
+      "howToEarn": "Nasıl Kazanılır?",
+      "infoTitle": "Rozetler Hakkında",
+      "infoDescription": "Rozetler, matematik oyunlarında gösterdiğin başarıları temsil eder. Her rozet farklı bir başarıyı ödüllendirir!",
+      "infoPoint1": "Rozetler oyun oynarken otomatik olarak kazanılır",
+      "infoPoint2": "Kazandığın rozetler profil sayfanda görüntülenir",
+      "infoPoint3": "Rozetlerin üzerindeki 'i' ikonuna tıklayarak veya dokunarak detayları görebilirsin"
+    }
+  },
+  "games": {
+    "quickRace": {
+      "name": "Hızlı Yarış",
+      "description": "Zamana karşı yarış! 60 saniyede mümkün olduğunca çok matematik sorusu cevapla!",
+      "title": "⚡ Hızlı Matematik Yarışı ⚡",
+      "startInstructions": "60 saniyede mümkün olduğunca çok matematik sorusu cevapla!",
+      "startRace": "Yarışı Başlat! 🚀",
+      "timeLeft": "Kalan Süre",
+      "score": "Puan",
+      "gameOver": "Oyun Bitti!",
+      "finalScore": "Final Puanı",
+      "correctAnswers": "✅ Doğru",
+      "wrongAnswers": "❌ Yanlış",
+      "xpEarned": "⭐ Kazanılan XP",
+      "playAgain": "Tekrar Oyna",
+      "dashboard": "Ana Sayfa"
+    },
+    "balloonPop": {
+      "name": "Balon Patlat",
+      "description": "Doğru cevaplarla balonları patlat! Tüm doğru hesaplamaları bul!",
+      "title": "🎈 Balon Patlat Matematik 🎈",
+      "instructions": "Doğru cevapları olan {count} balonu patlat!",
+      "startPopping": "Patlatmaya Başla! 🚀",
+      "score": "Puan",
+      "progress": "İlerleme",
+      "correct": "Doğru",
+      "wrong": "Yanlış",
+      "gameOver": "Oyun Bitti!",
+      "congratulations": "Tebrikler!",
+      "allBalloonsPopped": "Tüm Balonlar Patlatıldı!",
+      "finalScore": "Final Puanı",
+      "xpEarned": "⭐ Kazanılan XP",
+      "playAgain": "Tekrar Oyna",
+      "backToMenu": "Menüye Dön",
+      "dashboard": "Ana Sayfa"
+    },
+    "adventure": {
+      "name": "Macera",
+      "description": "Seviyeleri keşfet ve yeni maceraların kilidini açmak için matematik zorluklarını tamamla!",
+      "title": "🗺️ Matematik Macera Haritası 🗺️",
+      "mapDescription": "Yeni maceraların kilidini açmak için seviyeleri tamamla! Her seviyede seni bekleyen matematik zorlukları var.",
+      "selectLevel": "Bir Seviye Seç",
+      "locked": "Kilitli",
+      "completed": "Tamamlandı",
+      "current": "Mevcut",
+      "startInstructions": "60 saniyede mümkün olduğunca çok matematik sorusu cevapla!",
+      "startLevel": "Seviyeyi Başlat! 🚀",
+      "backToMap": "Haritaya Dön",
+      "levelComplete": "Seviye Tamamlandı!",
+      "difficulty": "Zorluk",
+      "xpEarned": "⭐ Kazanılan XP",
+      "backToDashboard": "Ana Sayfaya Dön"
+    },
+    "fractions": {
+      "name": "Kesirler",
+      "description": "Blokları sürükleyerek kesirler oluştur! Kesirleri eğlenceli bir şekilde öğren!",
+      "title": "🧩 Kesir Oluşturucu 🧩",
+      "instructions": "{numerator} dolu bloğu {denominator} yuvaya sürükle!",
+      "dragBlocks": "Bu blokları sürükle:",
+      "dropHere": "Buraya bırak:",
+      "perfect": "Mükemmel!",
+      "tryAnotherFraction": "Başka Bir Kesir Dene",
+      "reset": "Sıfırla",
+      "dashboard": "Ana Sayfa"
+    },
+    "geometry": {
+      "name": "Geometri",
+      "description": "Şekilleri özelliklerine göre eşleştir! Sürükle ve bırak ile geometri öğren!",
+      "title": "🔷 Geometri Eşleştirme 🔷",
+      "instructions": "Her şekli doğru açıklamasına sürükle!",
+      "shapes": "Şekiller:",
+      "dropTargets": "Bırakma hedefleri:",
+      "excellent": "Mükemmel!",
+      "playAgain": "Tekrar Oyna",
+      "reset": "Sıfırla",
+      "dashboard": "Ana Sayfa"
+    },
+    "wordStories": {
+      "name": "Kelime Hikayeleri",
+      "description": "Eğlenceli hikayeler oku ve matematik kelime problemlerini çöz!",
+      "title": "Kelime Problemi Hikayeleri",
+      "score": "Puan",
+      "nextStory": "Sonraki Hikaye",
+      "dashboard": "Ana Sayfa",
+      "correct": "Doğru!",
+      "incorrect": "Tam değil",
+      "correctAnswer": "Doğru cevap {answer}",
+      "thinking": "Düşünüyor..."
+    }
+  },
+  "wordProblems": {
+    "names": {
+      "en": ["Sara", "Tom", "Emma", "Jake", "Mia", "Alex", "Luna", "Noah"],
+      "tr": ["Ayşe", "Ali", "Elif", "Can", "Zeynep", "Emre", "Deniz", "Arda"]
+    },
+    "items": {
+      "en": ["apples", "stickers", "candies", "toys", "books", "pencils", "marbles", "cookies"],
+      "tr": ["elma", "çıkartma", "şeker", "oyuncak", "kitap", "kalem", "bilye", "kurabiye"]
+    },
+    "itemsPlural": {
+      "en": ["birds", "butterflies", "flowers", "bees"],
+      "tr": ["kuş", "kelebek", "çiçek", "arı"]
+    },
+    "subtraction": {
+      "storyTemplate": "{name}'in {a} tane {item} var ve {b} tanesini {friend} veriyor. {name}'in kaç tane {item} kaldı?",
+      "questionTemplate": "{name}'in kaç tane {item} kaldı?",
+      "friend": {
+        "en": ["their friend", "a friend"],
+        "tr": ["arkadaşına", "bir arkadaşına"]
+      }
+    },
+    "addition": {
+      "storyTemplate": "{name}'in {a} tane {item} var. {b} tane {item} daha {action}. {name}'in şimdi kaç tane {item} var?",
+      "questionTemplate": "{name}'in şimdi kaç tane {item} var?",
+      "action": {
+        "en": ["They buy", "They get"],
+        "tr": ["satın alıyor", "alıyor"]
+      }
+    },
+    "division": {
+      "storyTemplate": "{name}'in {a} tane {item} var. Bunları {b} {people} ile eşit olarak {action}. Her kişi kaç tane {item} alır?",
+      "questionTemplate": "Her kişi kaç tane {item} alır?",
+      "action": {
+        "en": ["They share", "They divide"],
+        "tr": ["paylaşıyor", "bölüyor"]
+      },
+      "people": {
+        "en": ["friends", "people"],
+        "tr": ["arkadaş", "kişi"]
+      }
+    },
+    "multiplication": {
+      "storyTemplate": "{name}'in {a} tane {container} var. Her {containerSingular} {b} tane {item} içeriyor. {name}'in toplam kaç tane {item} var?",
+      "questionTemplate": "{name}'in toplam kaç tane {item} var?",
+      "container": {
+        "en": ["boxes", "bags"],
+        "tr": ["kutu", "çanta"]
+      },
+      "containerSingular": {
+        "en": ["box", "bag"],
+        "tr": ["kutu", "çanta"]
+      }
+    },
+    "subtractionCount": {
+      "storyTemplate": "{location} {a} {item} var. {b} {item} {action}. Kaç {item} kaldı?",
+      "questionTemplate": "Kaç {item} kaldı?",
+      "location": {
+        "en": ["on a tree", "in the garden"],
+        "tr": ["ağaçta", "bahçede"]
+      },
+      "action": {
+        "en": ["fly away", "leave"],
+        "tr": ["uçup gidiyor", "ayrılıyor"]
+      }
+    }
+  },
+  "feedback": {
+    "correct": "Doğru!",
+    "incorrect": "Tam değil",
+    "tryAgain": "Tekrar Dene",
+    "wellDone": "Aferin!",
+    "keepGoing": "Devam Et!",
+    "excellent": "Mükemmel!",
+    "goodJob": "İyi İş!"
+  },
+  "errors": {
+    "serverError": "Sunucu hatası",
+    "unauthorized": "Yetkisiz erişim",
+    "userNotFound": "Kullanıcı bulunamadı",
+    "sessionNotFound": "Oturum bulunamadı",
+    "sessionIdRequired": "Oturum ID gerekli",
+    "gameTypeRequired": "Oyun türü gerekli",
+    "levelIdRequired": "Seviye ID gerekli",
+    "avatarRequired": "Avatar gerekli",
+    "emailRequired": "E-posta gerekli",
+    "codeRequired": "Kod gerekli",
+    "invalidCodeFormat": "Geçersiz kod formatı",
+    "invalidOrExpiredCode": "Geçersiz veya süresi dolmuş kod",
+    "codeExpired": "Kod süresi dolmuş",
+    "emailSendFailed": "E-posta gönderilemedi. Lütfen SMTP yapılandırmasını kontrol edin.",
+    "allFieldsRequired": "Lütfen tüm alanları doldurun"
+  },
+  "badges": {
+    "ballon_ustasi": {
+      "name": "Balon Ustası",
+      "description": "10 balonu doğru patlat",
+      "howToEarn": "Balon Patlat oyununda 10 balonu doğru cevapla patlat!"
+    },
+    "hizli_refleks": {
+      "name": "Hızlı Refleks",
+      "description": "3 soruyu 10 saniye içinde doğru çöz",
+      "howToEarn": "Herhangi bir oyunda 3 soruyu toplam 10 saniye içinde doğru çöz!"
+    },
+    "mukemmel_seri": {
+      "name": "Mükemmel Seri",
+      "description": "10 soruyu üst üste hatasız çöz",
+      "howToEarn": "10 soruyu arka arkaya hiç hata yapmadan doğru çöz!"
+    },
+    "toplama_kahramani": {
+      "name": "Toplama Kahramanı",
+      "description": "50 toplama sorusunda başarı",
+      "howToEarn": "Toplam 50 toplama sorusunu doğru çöz!"
+    },
+    "carpma_ustasi": {
+      "name": "Çarpma Ustası",
+      "description": "30 çarpma sorusunu doğru çöz",
+      "howToEarn": "Toplam 30 çarpma sorusunu doğru çöz!"
+    },
+    "gunun_sampiyonu": {
+      "name": "Günün Şampiyonu",
+      "description": "Gün içinde 300 XP kazan",
+      "howToEarn": "Bir gün içinde toplam 300 XP kazan!"
+    },
+    "balon_efsanesi": {
+      "name": "Balon Efsanesi",
+      "description": "100 toplam doğru cevap",
+      "howToEarn": "Tüm oyunlarda toplam 100 doğru cevap ver!"
+    }
+  }
+}
+

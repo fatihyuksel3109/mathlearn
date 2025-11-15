@@ -1,0 +1,348 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "thinking": "Thinking...",
+    "correct": "Correct!",
+    "incorrect": "Not quite right",
+    "correctAnswer": "The correct answer is {answer}",
+    "score": "Score",
+    "xp": "XP",
+    "streak": "Day Streak",
+    "badges": "Badges",
+    "totalXP": "Total XP",
+    "noBadges": "No badges yet. Keep playing to earn badges!",
+    "noGames": "No games played yet. Start playing to see your progress here!",
+    "noPlayers": "No players yet. Be the first to play!",
+    "games": "games"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "games": "Games",
+    "leaderboard": "Leaderboard",
+    "profile": "Profile",
+    "login": "Login",
+    "logout": "Logout",
+    "signup": "Sign Up",
+    "language": "Language"
+  },
+  "pages": {
+    "home": {
+      "title": "MathLearn",
+      "subtitle": "Learn Math Through Fun Games!",
+      "description": "Join thousands of kids learning math with our colorful, animated games. Race against time, pop balloons, solve puzzles, and earn XP!",
+      "getStarted": "Get Started!",
+      "goToDashboard": "Go to Dashboard"
+    },
+    "dashboard": {
+      "welcome": "Welcome, {name}!",
+      "keepLearning": "Keep learning and having fun!",
+      "chooseGame": "Choose a Game",
+      "recentGames": "Recent Games",
+      "correct": "correct",
+      "wrong": "wrong"
+    },
+    "games": {
+      "title": "Choose Your Game!",
+      "subtitle": "Pick a game and start learning math in a fun way!",
+      "playNow": "Play Now →",
+      "backToDashboard": "← Back to Dashboard"
+    },
+    "login": {
+      "title": "Welcome Back!",
+      "email": "Email",
+      "password": "Password",
+      "loginButton": "Login",
+      "loggingIn": "Logging in...",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up",
+      "error": "Something went wrong. Please try again.",
+      "emailNotVerified": "Email not verified. Please check your email for verification code.",
+      "noUserFound": "No user found with this email",
+      "invalidPassword": "Invalid password",
+      "missingCredentials": "Please enter your email and password"
+    },
+    "signup": {
+      "title": "Join the Fun!",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "signUpButton": "Sign Up",
+      "creatingAccount": "Creating account...",
+      "hasAccount": "Already have an account?",
+      "login": "Login",
+      "error": "Something went wrong. Please try again.",
+      "allFieldsRequired": "Please provide all fields",
+      "passwordMinLength": "Password must be at least 6 characters",
+      "userAlreadyExists": "User already exists with this email",
+      "emailSendFailed": "Account created but failed to send verification email. Please try again later."
+    },
+    "verifyEmail": {
+      "title": "Verify Email",
+      "description": "Enter the 6-digit verification code sent to your email address.",
+      "email": "Email",
+      "code": "Verification Code",
+      "codeHint": "Enter 6-digit code",
+      "verifyButton": "Verify",
+      "verifying": "Verifying...",
+      "resendCode": "Resend Code",
+      "resending": "Sending...",
+      "resendSuccess": "Verification code resent!",
+      "resendError": "Failed to send code. Please try again.",
+      "success": "Email verified successfully! Redirecting to login...",
+      "error": "Invalid or expired code. Please try again.",
+      "emailRequired": "Email address is required",
+      "backToLogin": "Back to login",
+      "login": "Login"
+    },
+    "profile": {
+      "chooseAvatar": "Choose Your Avatar",
+      "yourBadges": "Your Badges",
+      "gameProgress": "Game Progress"
+    },
+    "leaderboard": {
+      "title": "Leaderboard"
+    },
+    "badges": {
+      "title": "Badges",
+      "subtitle": "Discover all badges and learn how to earn them!",
+      "howToEarn": "How to Earn?",
+      "infoTitle": "About Badges",
+      "infoDescription": "Badges represent your achievements in math games. Each badge rewards a different accomplishment!",
+      "infoPoint1": "Badges are earned automatically while playing games",
+      "infoPoint2": "Your earned badges are displayed on your profile page",
+      "infoPoint3": "You can see badge details by clicking or touching the 'i' icon on badges"
+    }
+  },
+  "games": {
+    "quickRace": {
+      "name": "Quick Race",
+      "description": "Race against time! Answer as many math questions as you can in 60 seconds!",
+      "title": "⚡ Quick Math Race ⚡",
+      "startInstructions": "Answer as many math questions as you can in 60 seconds!",
+      "startRace": "Start Race! 🚀",
+      "timeLeft": "Time Left",
+      "score": "Score",
+      "gameOver": "Game Over!",
+      "finalScore": "Final Score",
+      "correctAnswers": "✅ Correct",
+      "wrongAnswers": "❌ Wrong",
+      "xpEarned": "⭐ XP Earned",
+      "playAgain": "Play Again",
+      "dashboard": "Dashboard"
+    },
+    "balloonPop": {
+      "name": "Balloon Pop",
+      "description": "Pop the balloons with correct answers! Find all the right calculations!",
+      "title": "🎈 Balloon Pop Math 🎈",
+      "instructions": "Pop all {count} balloons with correct answers!",
+      "startPopping": "Start Popping! 🚀",
+      "score": "Score",
+      "progress": "Progress",
+      "correct": "Correct",
+      "wrong": "Wrong",
+      "gameOver": "Game Over!",
+      "congratulations": "Congratulations!",
+      "allBalloonsPopped": "All Balloons Popped!",
+      "finalScore": "Final Score",
+      "xpEarned": "⭐ XP Earned",
+      "playAgain": "Play Again",
+      "backToMenu": "Back to Menu",
+      "dashboard": "Dashboard"
+    },
+    "adventure": {
+      "name": "Adventure",
+      "description": "Explore levels and complete math challenges to unlock new adventures!",
+      "title": "🗺️ Math Adventure Map 🗺️",
+      "mapDescription": "Complete levels to unlock new adventures! Each level has math challenges waiting for you.",
+      "selectLevel": "Select a Level",
+      "locked": "Locked",
+      "completed": "Completed",
+      "current": "Current",
+      "startInstructions": "Answer as many math questions as you can in 60 seconds!",
+      "startLevel": "Start Level! 🚀",
+      "backToMap": "Back to Map",
+      "levelComplete": "Level Complete!",
+      "difficulty": "Difficulty",
+      "xpEarned": "⭐ XP Earned",
+      "backToDashboard": "Back to Dashboard"
+    },
+    "fractions": {
+      "name": "Fractions",
+      "description": "Build fractions by dragging blocks! Learn fractions in a fun way!",
+      "title": "🧩 Fraction Builder 🧩",
+      "instructions": "Drag {numerator} filled blocks into the {denominator} slots!",
+      "dragBlocks": "Drag these blocks:",
+      "dropHere": "Drop here:",
+      "perfect": "Perfect!",
+      "tryAnotherFraction": "Try Another Fraction",
+      "reset": "Reset",
+      "dashboard": "Dashboard"
+    },
+    "geometry": {
+      "name": "Geometry",
+      "description": "Match shapes to their properties! Learn geometry through drag and drop!",
+      "title": "🔷 Geometry Match 🔷",
+      "instructions": "Drag each shape to its correct description!",
+      "shapes": "Shapes:",
+      "dropTargets": "Drop targets:",
+      "excellent": "Excellent!",
+      "playAgain": "Play Again",
+      "reset": "Reset",
+      "dashboard": "Dashboard"
+    },
+    "wordStories": {
+      "name": "Word Stories",
+      "description": "Read fun stories and solve math word problems!",
+      "title": "Word Problem Stories",
+      "score": "Score",
+      "nextStory": "Next Story",
+      "dashboard": "Dashboard",
+      "correct": "Correct!",
+      "incorrect": "Not quite right",
+      "correctAnswer": "The correct answer is {answer}",
+      "thinking": "Thinking..."
+    }
+  },
+  "wordProblems": {
+    "names": {
+      "en": ["Sara", "Tom", "Emma", "Jake", "Mia", "Alex", "Luna", "Noah"],
+      "tr": ["Ayşe", "Ali", "Elif", "Can", "Zeynep", "Emre", "Deniz", "Arda"]
+    },
+    "items": {
+      "en": ["apples", "stickers", "candies", "toys", "books", "pencils", "marbles", "cookies"],
+      "tr": ["elma", "çıkartma", "şeker", "oyuncak", "kitap", "kalem", "bilye", "kurabiye"]
+    },
+    "itemsPlural": {
+      "en": ["birds", "butterflies", "flowers", "bees"],
+      "tr": ["kuş", "kelebek", "çiçek", "arı"]
+    },
+    "subtraction": {
+      "storyTemplate": "{name} has {a} {item} and gives {b} to {friend}. How many {item} does {name} have left?",
+      "questionTemplate": "How many {item} does {name} have left?",
+      "friend": {
+        "en": ["their friend", "a friend"],
+        "tr": ["arkadaşına", "bir arkadaşına"]
+      }
+    },
+    "addition": {
+      "storyTemplate": "{name} has {a} {item}. {action} {b} more {item}. How many {item} does {name} have now?",
+      "questionTemplate": "How many {item} does {name} have now?",
+      "action": {
+        "en": ["They buy", "They get"],
+        "tr": ["Satın alıyor", "Alıyor"]
+      }
+    },
+    "division": {
+      "storyTemplate": "{name} has {a} {item}. {action} them equally with {b} {people}. How many {item} does each person get?",
+      "questionTemplate": "How many {item} does each person get?",
+      "action": {
+        "en": ["They share", "They divide"],
+        "tr": ["Paylaşıyor", "Bölüyor"]
+      },
+      "people": {
+        "en": ["friends", "people"],
+        "tr": ["arkadaş", "kişi"]
+      }
+    },
+    "multiplication": {
+      "storyTemplate": "{name} has {a} {container}. Each {containerSingular} has {b} {item}. How many {item} does {name} have in total?",
+      "questionTemplate": "How many {item} does {name} have in total?",
+      "container": {
+        "en": ["boxes", "bags"],
+        "tr": ["kutu", "çanta"]
+      },
+      "containerSingular": {
+        "en": ["box", "bag"],
+        "tr": ["kutu", "çanta"]
+      }
+    },
+    "subtractionCount": {
+      "storyTemplate": "There are {a} {item} {location}. {b} {item} {action}. How many {item} are left?",
+      "questionTemplate": "How many {item} are left?",
+      "location": {
+        "en": ["on a tree", "in the garden"],
+        "tr": ["ağaçta", "bahçede"]
+      },
+      "action": {
+        "en": ["fly away", "leave"],
+        "tr": ["uçup gidiyor", "ayrılıyor"]
+      }
+    }
+  },
+  "feedback": {
+    "correct": "Correct!",
+    "incorrect": "Not quite right",
+    "tryAgain": "Try Again",
+    "wellDone": "Well Done!",
+    "keepGoing": "Keep Going!",
+    "excellent": "Excellent!",
+    "goodJob": "Good Job!"
+  },
+  "errors": {
+    "serverError": "Server error",
+    "unauthorized": "Unauthorized",
+    "userNotFound": "User not found",
+    "sessionNotFound": "Session not found",
+    "sessionIdRequired": "Session ID is required",
+    "gameTypeRequired": "Game type is required",
+    "levelIdRequired": "Level ID is required",
+    "avatarRequired": "Avatar is required",
+    "emailRequired": "Email is required",
+    "codeRequired": "Code is required",
+    "invalidCodeFormat": "Invalid code format",
+    "invalidOrExpiredCode": "Invalid or expired code",
+    "codeExpired": "Code has expired",
+    "emailSendFailed": "Failed to send email. Please check SMTP configuration.",
+    "allFieldsRequired": "Please provide all fields"
+  },
+  "badges": {
+    "ballon_ustasi": {
+      "name": "Balloon Master",
+      "description": "Pop 10 balloons correctly",
+      "howToEarn": "Pop 10 balloons with correct answers in the Balloon Pop game!"
+    },
+    "hizli_refleks": {
+      "name": "Quick Reflex",
+      "description": "Solve 3 questions correctly within 10 seconds",
+      "howToEarn": "Solve 3 questions correctly within 10 seconds total in any game!"
+    },
+    "mukemmel_seri": {
+      "name": "Perfect Series",
+      "description": "Solve 10 questions in a row without errors",
+      "howToEarn": "Solve 10 questions in a row without making any mistakes!"
+    },
+    "toplama_kahramani": {
+      "name": "Addition Hero",
+      "description": "Successfully complete 50 addition questions",
+      "howToEarn": "Solve a total of 50 addition questions correctly!"
+    },
+    "carpma_ustasi": {
+      "name": "Multiplication Master",
+      "description": "Solve 30 multiplication questions correctly",
+      "howToEarn": "Solve a total of 30 multiplication questions correctly!"
+    },
+    "gunun_sampiyonu": {
+      "name": "Champion of the Day",
+      "description": "Earn 300 XP in a day",
+      "howToEarn": "Earn a total of 300 XP in a single day!"
+    },
+    "balon_efsanesi": {
+      "name": "Balloon Legend",
+      "description": "100 total correct answers",
+      "howToEarn": "Give 100 total correct answers across all games!"
+    }
+  }
+}
+
