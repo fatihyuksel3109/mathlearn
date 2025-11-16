@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations, useLocale } from 'next-intl';
-import { generateGeometryQuestion } from '@/lib/gameUtils';
+import { generateGeometryQuestion } from '@/lib/geometryQuestions';
 import NavigationBar from '@/components/NavigationBar';
 import WrongAnswerFeedback from '@/components/WrongAnswerFeedback';
 
@@ -57,14 +57,12 @@ export default function GeometryPage() {
   const router = useRouter();
   const t = useTranslations();
   const locale = useLocale();
-  const [shapes] = useState(generateGeometryQuestion());
-  const [targets, setTargets] = useState([
-    { id: 'target-3', label: t('games.geometry.targetLabels.threeSides'), shapeId: null as string | null },
-    { id: 'target-4', label: t('games.geometry.targetLabels.fourEqualSides'), shapeId: null as string | null },
-    { id: 'target-0', label: t('games.geometry.targetLabels.roundShape'), shapeId: null as string | null },
-  ]);
-  const [selectedShape, setSelectedShape] = useState<string | null>(null);
-  const [completed, setCompleted] = useState(false);
+  // Geometry quiz question; initialized on client to avoid SSR/client mismatch
+  const [geometryQuestion, setGeometryQuestion] = useState<
+    ReturnType<typeof generateGeometryQuestion> | null
+  >(null);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [isOptionCorrect, setIsOptionCorrect] = useState<boolean | null>(null);
   const [gameOver, setGameOver] = useState(false);
   const [showWrongFeedback, setShowWrongFeedback] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
@@ -84,7 +82,7 @@ export default function GeometryPage() {
   }, [correctCount, wrongCount, sessionId, startTime]);
 
   useEffect(() => {
-    // Start game session on mount
+    // Start game session and generate initial question on mount (client-only)
     const startSession = async () => {
       try {
         const res = await fetch('/api/game/start', {
@@ -99,6 +97,9 @@ export default function GeometryPage() {
         startTimeRef.current = Date.now();
       } catch (error) {
         console.error('Failed to start game session:', error);
+      } finally {
+        // Always ensure we have an initial question on the client
+        setGeometryQuestion(generateGeometryQuestion(locale));
       }
     };
     startSession();
@@ -120,62 +121,23 @@ export default function GeometryPage() {
       }
     };
   }, []);
+  const handleQuestionOptionClick = (option: string) => {
+    if (gameOver || !geometryQuestion) return;
 
-  const shapeData = [
-    { id: 'triangle', name: t('games.geometry.shapeNames.triangle'), emoji: '🔺', sides: 3 },
-    { id: 'square', name: t('games.geometry.shapeNames.square'), emoji: '⬜', sides: 4 },
-    { id: 'circle', name: t('games.geometry.shapeNames.circle'), emoji: '⭕', sides: 0 },
-  ];
+    setSelectedOption(option);
+    const correct = option === geometryQuestion.correctAnswer;
+    setIsOptionCorrect(correct);
 
-  const handleShapeClick = (shapeId: string) => {
-    if (gameOver) return;
-    // If clicking the same shape, deselect it
-    if (selectedShape === shapeId) {
-      setSelectedShape(null);
+    if (correct) {
+      setCorrectCount((prev) => prev + 1);
     } else {
-      setSelectedShape(shapeId);
-    }
-  };
-
-  const handleTargetClick = (targetId: string) => {
-    if (!selectedShape || gameOver) return;
-
-    const shape = shapeData.find((s) => s.id === selectedShape);
-    if (!shape) return;
-
-    const target = targets.find((t) => t.id === targetId);
-    if (!target || target.shapeId !== null) return;
-
-    // Check if correct match
-    const isCorrect =
-      (targetId === 'target-3' && shape.sides === 3) ||
-      (targetId === 'target-4' && shape.sides === 4) ||
-      (targetId === 'target-0' && shape.sides === 0);
-
-    const newTargets = targets.map((target) => {
-      if (target.id === targetId) {
-        if (isCorrect) {
-          setCorrectCount(correctCount + 1);
-          return { ...target, shapeId: selectedShape };
-        } else {
-          setWrongCount(wrongCount + 1);
-          setShowWrongFeedback(true);
-          // End game on wrong answer
-          setTimeout(() => {
-            setGameOver(true);
-            submitGameResults();
-          }, 2000);
-        }
-      }
-      return target;
-    });
-
-    setTargets(newTargets);
-    setSelectedShape(null);
-
-    // Check if all matched
-    if (newTargets.every((t) => t.shapeId !== null)) {
-      setCompleted(true);
+      setWrongCount((prev) => prev + 1);
+      setShowWrongFeedback(true);
+      // Yanlış cevapta oyunu bitirip sonuçları gönder
+      setTimeout(() => {
+        setGameOver(true);
+        submitGameResults();
+      }, 2000);
     }
   };
 
@@ -200,13 +162,12 @@ export default function GeometryPage() {
   };
 
   const resetGame = () => {
-    setTargets([
-      { id: 'target-3', label: t('games.geometry.targetLabels.threeSides'), shapeId: null },
-      { id: 'target-4', label: t('games.geometry.targetLabels.fourEqualSides'), shapeId: null },
-      { id: 'target-0', label: t('games.geometry.targetLabels.roundShape'), shapeId: null },
-    ]);
-    setSelectedShape(null);
-    setCompleted(false);
+    // Yeni oyun: soru ve durumları sıfırla
+    setGeometryQuestion(generateGeometryQuestion(locale));
+    setSelectedOption(null);
+    setIsOptionCorrect(null);
+    setCorrectCount(0);
+    setWrongCount(0);
     setGameOver(false);
     setShowWrongFeedback(false);
   };
@@ -235,63 +196,77 @@ export default function GeometryPage() {
             {t('games.geometry.title')}
           </h1>
 
-          <p className="text-center text-xl text-gray-700 mb-8">
-            {t('games.geometry.instructions')}
-          </p>
-          {selectedShape && (
-            <div className="text-center mb-4 text-lg text-cute-primary font-bold">
-              {t('games.geometry.selectedShape', { 
-                shape: shapeData.find(s => s.id === selectedShape)?.name || 'Shape' 
-              })}
-            </div>
-          )}
-
           <div className="space-y-8">
-            <div>
-              <h3 className="text-2xl font-bold text-cute-primary mb-4">{t('games.geometry.shapes')}</h3>
-              <div className="flex gap-4 flex-wrap">
-                {shapeData.map((shape) => {
-                  const isPlaced = targets.some((t) => t.shapeId === shape.id);
-                  if (isPlaced) return null;
-                  return (
-                    <motion.button
-                      key={shape.id}
-                      onClick={() => handleShapeClick(shape.id)}
-                      disabled={gameOver}
-                      whileHover={!gameOver ? { scale: 1.05 } : {}}
-                      whileTap={!gameOver ? { scale: 0.95 } : {}}
-                      className={`bg-white cute-border border-4 rounded-2xl p-6 cursor-pointer cute-shadow transition-colors touch-manipulation ${
-                        gameOver
-                          ? 'opacity-50 cursor-not-allowed'
-                          : selectedShape === shape.id
-                          ? 'bg-pastel-blue border-cute-accent'
-                          : 'border-cute-primary hover:bg-pastel-pink'
-                      }`}
-                      style={{ WebkitTapHighlightColor: 'transparent' }}
-                    >
-                      <div className="text-5xl mb-2">{shape.emoji}</div>
-                      <div className="text-lg font-bold text-cute-primary">{shape.name}</div>
-                    </motion.button>
-                  );
-                })}
-              </div>
-            </div>
+            {/* Geometry quiz question using the rich generator only */}
+            {geometryQuestion && !gameOver && (
+              <div className="mt-8">
+                <h3 className="text-2xl font-bold text-cute-primary mb-2">Geometri Sorusu</h3>
+                <p className="text-lg text-gray-700 mb-4">{geometryQuestion.question}</p>
 
-            {!gameOver && (
-              <div>
-                <h3 className="text-2xl font-bold text-cute-primary mb-4">{t('games.geometry.dropTargets')}</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {targets.map((target) => (
-                    <TargetBox
-                      key={target.id}
-                      id={target.id}
-                      label={target.label}
-                      shapeId={target.shapeId}
-                      selectedShape={selectedShape}
-                      onClick={() => handleTargetClick(target.id)}
-                      disabled={gameOver}
+                {geometryQuestion.imageHint && (
+                  <div className="flex justify-center mb-4">
+                    {/* Image hints are optional; make sure the asset exists for best experience */}
+                    <img
+                      src={geometryQuestion.imageHint}
+                      alt={geometryQuestion.type}
+                      className="w-24 h-24 object-contain"
                     />
-                  ))}
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {geometryQuestion.options.map((option) => {
+                    const isSelected = selectedOption === option;
+                    const isCorrectOption = option === geometryQuestion.correctAnswer;
+
+                    let bgClass = 'bg-white';
+                    if (isSelected && isOptionCorrect === true && isCorrectOption) {
+                      bgClass = 'bg-pastel-green';
+                    } else if (isSelected && isOptionCorrect === false) {
+                      bgClass = 'bg-pastel-pink';
+                    }
+
+                    return (
+                      <motion.button
+                        key={option}
+                        whileHover={!gameOver ? { scale: 1.03 } : {}}
+                        whileTap={!gameOver ? { scale: 0.97 } : {}}
+                        onClick={() => handleQuestionOptionClick(option)}
+                        disabled={gameOver}
+                        className={`${bgClass} cute-border rounded-xl px-4 py-3 text-center font-semibold text-cute-primary transition-colors`}
+                        style={{ WebkitTapHighlightColor: 'transparent' }}
+                      >
+                        {option}
+                      </motion.button>
+                    );
+                  })}
+                </div>
+
+                {selectedOption && (
+                  <p
+                    className={`mt-3 text-center font-bold ${
+                      isOptionCorrect ? 'text-green-600' : 'text-red-600'
+                    }`}
+                  >
+                    {isOptionCorrect
+                      ? 'Harika! Doğru cevap 🎉'
+                      : `Doğru cevap: ${geometryQuestion.correctAnswer}`}
+                  </p>
+                )}
+
+                <div className="flex justify-center mt-4">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => {
+                      setGeometryQuestion(generateGeometryQuestion(locale));
+                      setSelectedOption(null);
+                      setIsOptionCorrect(null);
+                    }}
+                    className="bg-cute-primary text-white px-6 py-3 rounded-xl font-bold"
+                  >
+                    Yeni soru
+                  </motion.button>
                 </div>
               </div>
             )}
@@ -330,28 +305,6 @@ export default function GeometryPage() {
               </motion.div>
             )}
           </div>
-
-          <AnimatePresence>
-            {completed && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0 }}
-                className="mt-8 text-center"
-              >
-                <div className="text-6xl mb-4">🎉</div>
-                <h2 className="text-3xl font-bold text-cute-primary mb-4">{t('games.geometry.excellent')}</h2>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={resetGame}
-                  className="bg-cute-primary text-white px-6 py-3 rounded-xl font-bold"
-                >
-                  {t('games.geometry.playAgain')}
-                </motion.button>
-              </motion.div>
-            )}
-          </AnimatePresence>
 
           <div className="flex justify-center mt-6 gap-4">
             <motion.button

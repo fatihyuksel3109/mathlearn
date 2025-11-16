@@ -442,7 +442,7 @@ export function generateWordProblem(t: (key: string, values?: any) => string, me
   };
 }
 
-export function generateGeometryQuestion() {
+export function generateGeometryQuestionOld() {
   const shapes = [
     { name: 'triangle', sides: 3, description: '3 sides' },
     { name: 'square', sides: 4, description: '4 equal sides' },
