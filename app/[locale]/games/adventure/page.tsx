@@ -37,6 +37,19 @@ function AdventureContent() {
     return 10 + (levelNum - 1) * 5; // Level 1: 10, Level 2: 15, Level 3: 20, etc.
   };
 
+  // Map level IDs to background images
+  const getLevelImage = (levelId: string): string => {
+    const imageMap: Record<string, string> = {
+      '1': '/images/island.jpg',
+      '2': '/images/desert.jpeg',
+      '3': '/images/mountain.jpg',
+      '4': '/images/forest.jpg',
+      '5': '/images/crystal_caves.jpg',
+      '6': '/images/sky-castle.jpg',
+    };
+    return imageMap[levelId] || '/images/island.jpg';
+  };
+
   const [levels, setLevels] = useState<Level[]>([
     { id: '1', name: t('games.adventure.levelNames.1'), difficulty: 1, stars: 0, completed: false, icon: '🏝️', position: { x: 10, y: 20 } },
     { id: '2', name: t('games.adventure.levelNames.2'), difficulty: 2, stars: 0, completed: false, icon: '🏜️', position: { x: 30, y: 40 } },
@@ -57,6 +70,10 @@ function AdventureContent() {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [earnedStars, setEarnedStars] = useState(0);
   const [showWrongFeedback, setShowWrongFeedback] = useState(false);
+  const [showIntroAnimation, setShowIntroAnimation] = useState(false);
+  const [showBackground, setShowBackground] = useState(false);
+  const [showGameUI, setShowGameUI] = useState(false);
+  const [animationPhase, setAnimationPhase] = useState<'reveal' | 'zoom-out' | 'complete'>('reveal');
 
   useEffect(() => {
     fetchLevelProgress();
@@ -118,6 +135,44 @@ function AdventureContent() {
     reset();
   }, [reset]);
 
+  // Animation sequence when level is selected
+  useEffect(() => {
+    if (currentLevel && !gameStarted) {
+      // Reset animation states
+      setShowIntroAnimation(true);
+      setShowBackground(false);
+      setShowGameUI(false);
+      setAnimationPhase('reveal');
+
+      // Start reveal animation (0.9s)
+      const revealTimer = setTimeout(() => {
+        setAnimationPhase('zoom-out');
+      }, 900);
+
+      // After reveal + zoom-out (2.1s total), show background and UI
+      const completeTimer = setTimeout(() => {
+        setAnimationPhase('complete');
+        setShowBackground(true);
+        setShowGameUI(true);
+        // Hide intro animation after a brief delay
+        setTimeout(() => {
+          setShowIntroAnimation(false);
+        }, 100);
+      }, 2100);
+
+      return () => {
+        clearTimeout(revealTimer);
+        clearTimeout(completeTimer);
+      };
+    } else if (!currentLevel) {
+      // Reset when going back to map
+      setShowIntroAnimation(false);
+      setShowBackground(false);
+      setShowGameUI(false);
+      setAnimationPhase('reveal');
+    }
+  }, [currentLevel, gameStarted]);
+
   const fetchLevelProgress = async () => {
     try {
       const res = await fetch('/api/level/progress');
@@ -174,6 +229,11 @@ function AdventureContent() {
 
   const startGame = async () => {
     if (!currentLevel) return;
+    
+    // Ensure UI is visible when game starts
+    setShowGameUI(true);
+    setShowBackground(true);
+    setShowIntroAnimation(false);
     
     try {
       const res = await fetch('/api/game/start', {
@@ -282,9 +342,41 @@ function AdventureContent() {
 
   // Show game screen if level is selected
   if (currentLevel) {
+    const levelImage = getLevelImage(currentLevel.id);
+    
     return (
-      <div className="min-h-screen bg-gradient-to-br from-pastel-yellow via-pastel-peach to-pastel-pink relative overflow-hidden">
-        <NavigationBar />
+      <div className="min-h-screen relative overflow-hidden">
+        {/* Background image container */}
+        <div
+          className={`absolute inset-0 transition-opacity ${
+            showBackground ? 'opacity-100' : 'opacity-0'
+          }`}
+          style={{
+            backgroundImage: `url(${levelImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            transitionDuration: '0.6s',
+          }}
+        />
+        
+        {/* Intro animation overlay */}
+        {showIntroAnimation && (
+          <div className="absolute inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <img
+              src={levelImage}
+              alt={currentLevel.name}
+              className={`w-4/5 max-w-2xl h-auto object-contain intro-image-glow ${
+                animationPhase === 'reveal' ? 'reveal-animation' : 
+                animationPhase === 'zoom-out' ? 'zoom-out-animation' : ''
+              }`}
+            />
+          </div>
+        )}
+        
+        <div className="relative z-20">
+          <NavigationBar />
+        </div>
         {typeof window !== 'undefined' && showConfetti && (
           <Confetti width={window.innerWidth} height={window.innerHeight} />
         )}
@@ -294,10 +386,12 @@ function AdventureContent() {
           onHide={() => setShowWrongFeedback(false)}
         />
         
-        <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className={`max-w-4xl mx-auto px-4 py-8 relative z-10 transition-all duration-500 ${
+          showGameUI ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+        }`}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={{ opacity: showGameUI ? 1 : 0, y: showGameUI ? 0 : 20 }}
             className="bg-white cute-border cute-shadow rounded-2xl p-8"
           >
             <div className="text-center mb-6">

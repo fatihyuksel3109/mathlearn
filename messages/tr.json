@@ -124,7 +124,20 @@
       "gameProgress": "Oyun İlerlemesi"
     },
     "leaderboard": {
-      "title": "Lider Tablosu"
+      "title": "Lider Tablosu",
+      "allTime": "Tüm Zamanlar",
+      "daily": "Günlük",
+      "weekly": "Haftalık",
+      "monthly": "Aylık",
+      "dailyChampion": "Günlük Şampiyon",
+      "weeklyChampion": "Haftalık Şampiyon",
+      "monthlyChampion": "Aylık Şampiyon",
+      "lastDaysChampion": "Dünün Şampiyonu",
+      "lastWeeksChampion": "Geçen Haftanın Şampiyonu",
+      "lastMonthsChampion": "Geçen Ayın Şampiyonu",
+      "currentChampion": "Mevcut Şampiyon",
+      "period": "Dönem",
+      "xpEarned": "Kazanılan XP"
     },
     "badges": {
       "title": "Rozetler",
@@ -378,6 +391,296 @@
       "name": "Balon Efsanesi",
       "description": "100 toplam doğru cevap",
       "howToEarn": "Tüm oyunlarda toplam 100 doğru cevap ver!"
+    },
+    "simsek_refleks": {
+      "name": "Şimşek Refleks",
+      "description": "3 soruyu 5 saniye içinde doğru çöz",
+      "howToEarn": "Herhangi bir oyunda 3 soruyu toplam 5 saniye içinde doğru çöz!"
+    },
+    "hiz_canavari": {
+      "name": "Hız Canavarı",
+      "description": "5 soruyu 15 saniye içinde doğru çöz",
+      "howToEarn": "Herhangi bir oyunda 5 soruyu toplam 15 saniye içinde doğru çöz!"
+    },
+    "zaman_ustasi": {
+      "name": "Zaman Ustası",
+      "description": "10 soruyu 30 saniye içinde doğru çöz",
+      "howToEarn": "Herhangi bir oyunda 10 soruyu toplam 30 saniye içinde doğru çöz!"
+    },
+    "ultra_hizli": {
+      "name": "Ultra Hızlı",
+      "description": "20 soruyu 60 saniye içinde doğru çöz",
+      "howToEarn": "Herhangi bir oyunda 20 soruyu toplam 60 saniye içinde doğru çöz!"
+    },
+    "flas_sampiyonu": {
+      "name": "Flaş Şampiyonu",
+      "description": "50 soruyu 2 dakika içinde doğru çöz",
+      "howToEarn": "Herhangi bir oyunda 50 soruyu toplam 2 dakika içinde doğru çöz!"
+    },
+    "mukemmel_baslangic": {
+      "name": "Mükemmel Başlangıç",
+      "description": "5 soruyu üst üste hatasız çöz",
+      "howToEarn": "5 soruyu arka arkaya hiç hata yapmadan doğru çöz!"
+    },
+    "dogruluk_kahramani": {
+      "name": "Doğruluk Kahramanı",
+      "description": "20 soruyu üst üste hatasız çöz",
+      "howToEarn": "20 soruyu arka arkaya hiç hata yapmadan doğru çöz!"
+    },
+    "mukemmel_usta": {
+      "name": "Mükemmel Usta",
+      "description": "50 soruyu üst üste hatasız çöz",
+      "howToEarn": "50 soruyu arka arkaya hiç hata yapmadan doğru çöz!"
+    },
+    "sifir_hata": {
+      "name": "Sıfır Hata",
+      "description": "20 soruda %100 doğruluk oranı",
+      "howToEarn": "20 soruda %100 doğruluk oranı elde et!"
+    },
+    "kusursuz": {
+      "name": "Kusursuz",
+      "description": "50 soruda %100 doğruluk oranı",
+      "howToEarn": "50 soruda %100 doğruluk oranı elde et!"
+    },
+    "toplama_yeni_baslayan": {
+      "name": "Toplama Yeni Başlayan",
+      "description": "50 toplama sorusunu doğru çöz",
+      "howToEarn": "Toplam 50 toplama sorusunu doğru çöz!"
+    },
+    "toplama_uzmani": {
+      "name": "Toplama Uzmanı",
+      "description": "100 toplama sorusunu doğru çöz",
+      "howToEarn": "Toplam 100 toplama sorusunu doğru çöz!"
+    },
+    "toplama_efsanesi": {
+      "name": "Toplama Efsanesi",
+      "description": "500 toplama sorusunu doğru çöz",
+      "howToEarn": "Toplam 500 toplama sorusunu doğru çöz!"
+    },
+    "cikarma_yeni_baslayan": {
+      "name": "Çıkarma Yeni Başlayan",
+      "description": "50 çıkarma sorusunu doğru çöz",
+      "howToEarn": "Toplam 50 çıkarma sorusunu doğru çöz!"
+    },
+    "cikarma_uzmani": {
+      "name": "Çıkarma Uzmanı",
+      "description": "100 çıkarma sorusunu doğru çöz",
+      "howToEarn": "Toplam 100 çıkarma sorusunu doğru çöz!"
+    },
+    "cikarma_efsanesi": {
+      "name": "Çıkarma Efsanesi",
+      "description": "500 çıkarma sorusunu doğru çöz",
+      "howToEarn": "Toplam 500 çıkarma sorusunu doğru çöz!"
+    },
+    "carpma_yeni_baslayan": {
+      "name": "Çarpma Yeni Başlayan",
+      "description": "30 çarpma sorusunu doğru çöz",
+      "howToEarn": "Toplam 30 çarpma sorusunu doğru çöz!"
+    },
+    "carpma_uzmani": {
+      "name": "Çarpma Uzmanı",
+      "description": "100 çarpma sorusunu doğru çöz",
+      "howToEarn": "Toplam 100 çarpma sorusunu doğru çöz!"
+    },
+    "carpma_efsanesi": {
+      "name": "Çarpma Efsanesi",
+      "description": "300 çarpma sorusunu doğru çöz",
+      "howToEarn": "Toplam 300 çarpma sorusunu doğru çöz!"
+    },
+    "bolme_yeni_baslayan": {
+      "name": "Bölme Yeni Başlayan",
+      "description": "25 bölme sorusunu doğru çöz",
+      "howToEarn": "Toplam 25 bölme sorusunu doğru çöz!"
+    },
+    "bolme_uzmani": {
+      "name": "Bölme Uzmanı",
+      "description": "75 bölme sorusunu doğru çöz",
+      "howToEarn": "Toplam 75 bölme sorusunu doğru çöz!"
+    },
+    "bolme_efsanesi": {
+      "name": "Bölme Efsanesi",
+      "description": "200 bölme sorusunu doğru çöz",
+      "howToEarn": "Toplam 200 bölme sorusunu doğru çöz!"
+    },
+    "macera_baslangic": {
+      "name": "Macera Başlangıcı",
+      "description": "1 macera seviyesini tamamla",
+      "howToEarn": "Macera oyununda 1 seviyeyi tamamla!"
+    },
+    "macera_kesifci": {
+      "name": "Macera Keşifçi",
+      "description": "3 macera seviyesini tamamla",
+      "howToEarn": "Macera oyununda 3 seviyeyi tamamla!"
+    },
+    "macera_efsanesi": {
+      "name": "Macera Efsanesi",
+      "description": "6 macera seviyesini tamamla",
+      "howToEarn": "Macera oyununda tüm 6 seviyeyi tamamla!"
+    },
+    "macera_ustasi": {
+      "name": "Macera Ustası",
+      "description": "Tüm seviyelerde mükemmel performans",
+      "howToEarn": "Tüm macera seviyelerinde mükemmel performans göster (her seviyede 3 yıldız)!"
+    },
+    "seviye_hiz_rekortmeni": {
+      "name": "Seviye Hız Rekortmeni",
+      "description": "Bir seviyeyi rekor hızla tamamla",
+      "howToEarn": "Bir macera seviyesini rekor hızla tamamla!"
+    },
+    "butun_seviyeleri_ac": {
+      "name": "Bütün Seviyeleri Aç",
+      "description": "Tüm macera seviyelerinin kilidini aç",
+      "howToEarn": "Macera oyununda tüm 6 seviyenin kilidini aç!"
+    },
+    "uc_gunluk_seri": {
+      "name": "3 Günlük Seri",
+      "description": "3 gün üst üste oyna",
+      "howToEarn": "3 gün üst üste oyun oyna!"
+    },
+    "haftalik_kahraman": {
+      "name": "Haftalık Kahraman",
+      "description": "7 gün üst üste oyna",
+      "howToEarn": "7 gün üst üste oyun oyna!"
+    },
+    "iki_hafta_ustasi": {
+      "name": "İki Hafta Ustası",
+      "description": "14 gün üst üste oyna",
+      "howToEarn": "14 gün üst üste oyun oyna!"
+    },
+    "ayin_sampiyonu": {
+      "name": "Ayın Şampiyonu",
+      "description": "30 gün üst üste oyna",
+      "howToEarn": "30 gün üst üste oyun oyna!"
+    },
+    "yuz_gun_efsanesi": {
+      "name": "100 Gün Efsanesi",
+      "description": "100 gün üst üste oyna",
+      "howToEarn": "100 gün üst üste oyun oyna!"
+    },
+    "balon_yeni_baslayan": {
+      "name": "Balon Yeni Başlayan",
+      "description": "Balon Patlat oyununda 5 doğru",
+      "howToEarn": "Balon Patlat oyununda 5 doğru cevap ver!"
+    },
+    "balon_uzmani": {
+      "name": "Balon Uzmanı",
+      "description": "Balon Patlat oyununda 50 doğru",
+      "howToEarn": "Balon Patlat oyununda 50 doğru cevap ver!"
+    },
+    "balon_efsanesi_oyun": {
+      "name": "Balon Efsanesi",
+      "description": "Balon Patlat oyununda 200 doğru",
+      "howToEarn": "Balon Patlat oyununda 200 doğru cevap ver!"
+    },
+    "hizli_yaris_yeni_baslayan": {
+      "name": "Hızlı Yarış Yeni Başlayan",
+      "description": "Hızlı Yarış oyununda 10 doğru",
+      "howToEarn": "Hızlı Yarış oyununda 10 doğru cevap ver!"
+    },
+    "hizli_yaris_uzmani": {
+      "name": "Hızlı Yarış Uzmanı",
+      "description": "Hızlı Yarış oyununda 100 doğru",
+      "howToEarn": "Hızlı Yarış oyununda 100 doğru cevap ver!"
+    },
+    "hizli_yaris_sampiyonu": {
+      "name": "Hızlı Yarış Şampiyonu",
+      "description": "Hızlı Yarış oyununda 500 doğru",
+      "howToEarn": "Hızlı Yarış oyununda 500 doğru cevap ver!"
+    },
+    "kesir_ustasi": {
+      "name": "Kesir Ustası",
+      "description": "Kesirler oyununda 20 başarı",
+      "howToEarn": "Kesirler oyununda 20 başarı elde et!"
+    },
+    "kesir_buyucusu": {
+      "name": "Kesir Büyücüsü",
+      "description": "Kesirler oyununda 100 başarı",
+      "howToEarn": "Kesirler oyununda 100 başarı elde et!"
+    },
+    "geometri_uzmani": {
+      "name": "Geometri Uzmanı",
+      "description": "Geometri oyununda 20 başarı",
+      "howToEarn": "Geometri oyununda 20 başarı elde et!"
+    },
+    "geometri_dahisi": {
+      "name": "Geometri Dahisi",
+      "description": "Geometri oyununda 100 başarı",
+      "howToEarn": "Geometri oyununda 100 başarı elde et!"
+    },
+    "ilk_adimlar": {
+      "name": "İlk Adımlar",
+      "description": "100 XP kazan",
+      "howToEarn": "Toplam 100 XP kazan!"
+    },
+    "ogrenci_yildiz": {
+      "name": "Öğrenci Yıldız",
+      "description": "500 XP kazan",
+      "howToEarn": "Toplam 500 XP kazan!"
+    },
+    "ogrenci_kahramani": {
+      "name": "Öğrenci Kahramanı",
+      "description": "1000 XP kazan",
+      "howToEarn": "Toplam 1000 XP kazan!"
+    },
+    "matematik_ustasi": {
+      "name": "Matematik Ustası",
+      "description": "2500 XP kazan",
+      "howToEarn": "Toplam 2500 XP kazan!"
+    },
+    "matematik_efsanesi": {
+      "name": "Matematik Efsanesi",
+      "description": "5000 XP kazan",
+      "howToEarn": "Toplam 5000 XP kazan!"
+    },
+    "ustun_ogrenci": {
+      "name": "Üstün Öğrenci",
+      "description": "10000 XP kazan",
+      "howToEarn": "Toplam 10000 XP kazan!"
+    },
+    "matematik_dehasi": {
+      "name": "Matematik Dehası",
+      "description": "25000 XP kazan",
+      "howToEarn": "Toplam 25000 XP kazan!"
+    },
+    "hafta_savasci": {
+      "name": "Hafta Savaşçı",
+      "description": "Bir haftada 5 gün oyna",
+      "howToEarn": "Bir hafta içinde 5 farklı günde oyun oyna!"
+    },
+    "gunluk_sampiyon": {
+      "name": "Günlük Şampiyon",
+      "description": "Bir günde 500 XP kazan",
+      "howToEarn": "Bir gün içinde toplam 500 XP kazan!"
+    },
+    "haftalik_usta": {
+      "name": "Haftalık Usta",
+      "description": "Bir haftada 2000 XP kazan",
+      "howToEarn": "Bir hafta içinde toplam 2000 XP kazan!"
+    },
+    "hafta_sonu_savasci": {
+      "name": "Hafta Sonu Savaşçı",
+      "description": "Cumartesi ve Pazar günleri oyna",
+      "howToEarn": "Cumartesi ve Pazar günleri oyun oyna!"
+    },
+    "gece_yarisi_oyuncu": {
+      "name": "Gece Yarısı Oyuncu",
+      "description": "Gece yarısından sonra oyna",
+      "howToEarn": "Gece yarısından sonra (00:00-06:00 arası) oyun oyna!"
+    },
+    "erken_kusu": {
+      "name": "Erken Kuşu",
+      "description": "Sabah 6'dan önce oyna",
+      "howToEarn": "Sabah 6'dan önce oyun oyna!"
+    },
+    "mukemmel_hafta": {
+      "name": "Mükemmel Hafta",
+      "description": "7 gün üst üste hatasız oyun",
+      "howToEarn": "7 gün üst üste hatasız oyun oyna (hiç hata yapmadan)!"
+    },
+    "koleksiyoncu": {
+      "name": "Koleksiyoncu",
+      "description": "25 farklı rozet kazan",
+      "howToEarn": "25 farklı rozet kazan!"
     }
   }
 }

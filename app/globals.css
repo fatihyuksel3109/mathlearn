@@ -20,6 +20,28 @@ body {
   min-height: 100vh;
 }
 
+@keyframes revealAnimation {
+  0% {
+    transform: scale(0.7) rotate(0deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.15) rotate(1.5deg);
+    opacity: 1;
+  }
+}
+
+@keyframes zoomOutAnimation {
+  0% {
+    transform: scale(1.15) rotate(1.5deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.1) rotate(0deg);
+    opacity: 0;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -35,6 +57,25 @@ body {
   
   .bounce-hover:hover {
     animation: bounce 0.5s;
+  }
+  
+  .reveal-animation {
+    animation: revealAnimation 0.9s ease-out forwards;
+  }
+  
+  .zoom-out-animation {
+    animation: zoomOutAnimation 1.2s ease-in forwards;
+  }
+  
+  .intro-image-glow {
+    border-radius: 20px;
+    box-shadow: 
+      0 0 40px rgba(0, 0, 0, 0.6),
+      0 0 80px rgba(0, 0, 0, 0.4),
+      0 0 120px rgba(0, 0, 0, 0.2),
+      inset 0 0 20px rgba(255, 255, 255, 0.1);
+    filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.5));
+    transition: all 0.3s ease;
   }
 }
 

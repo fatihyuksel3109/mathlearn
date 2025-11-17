@@ -189,6 +189,7 @@ export function generateWordProblem(t: (key: string, values?: any) => string, me
         const itemWithPossessive = addTurkishPossessive(item);
         return template
           .replace(/{name}'in/g, nameGenitive)
+          .replace(/{name}/g, name)
           .replace(/{a}/g, a.toString())
           .replace(/{b}/g, b.toString())
           .replace(/{item}/g, itemWithPossessive)
@@ -202,6 +203,7 @@ export function generateWordProblem(t: (key: string, values?: any) => string, me
         const itemWithPossessive = addTurkishPossessive(item);
         return template
           .replace(/{name}'in/g, nameGenitive)
+          .replace(/{name}/g, name)
           .replace(/{item}/g, itemWithPossessive);
       },
       generate: () => {
@@ -230,6 +232,7 @@ export function generateWordProblem(t: (key: string, values?: any) => string, me
         // Replace in specific order to handle different {item} contexts
         let result = template
           .replace(/{name}'in/g, nameGenitive)
+          .replace(/{name}/g, name)
           .replace(/{a}/g, a.toString())
           .replace(/{b}/g, b.toString())
           .replace(/{action}/g, action);
@@ -247,6 +250,7 @@ export function generateWordProblem(t: (key: string, values?: any) => string, me
         const itemWithPossessive = addTurkishPossessive(item);
         return template
           .replace(/{name}'in/g, nameGenitive)
+          .replace(/{name}/g, name)
           .replace(/{item}/g, itemWithPossessive);
       },
       generate: () => {
@@ -275,6 +279,7 @@ export function generateWordProblem(t: (key: string, values?: any) => string, me
         // Second {item} (before "alır") → accusative (direct object)
         let result = template
           .replace(/{name}'in/g, nameGenitive)
+          .replace(/{name}/g, name)
           .replace(/{a}/g, a.toString())
           .replace(/{b}/g, b.toString())
           .replace(/{action}/g, action)
@@ -319,6 +324,7 @@ export function generateWordProblem(t: (key: string, values?: any) => string, me
         // Template: "{name}'in {a} tane {container} var. Her {containerSingular} {b} tane {item} içeriyor. {name}'in toplam kaç tane {item} var?"
         let result = template
           .replace(/{name}'in/g, nameGenitive)
+          .replace(/{name}/g, name)
           .replace(/{a}/g, a.toString())
           .replace(/{b}/g, b.toString())
           .replace(/{containerSingular}/g, containerSingular);
@@ -337,6 +343,7 @@ export function generateWordProblem(t: (key: string, values?: any) => string, me
         const itemWithPossessive = addTurkishPossessive(item);
         return template
           .replace(/{name}'in/g, nameGenitive)
+          .replace(/{name}/g, name)
           .replace(/{item}/g, itemWithPossessive);
       },
       generate: () => {

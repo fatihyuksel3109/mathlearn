@@ -124,7 +124,20 @@
       "gameProgress": "Game Progress"
     },
     "leaderboard": {
-      "title": "Leaderboard"
+      "title": "Leaderboard",
+      "allTime": "All Time",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "dailyChampion": "Daily Champion",
+      "weeklyChampion": "Weekly Champion",
+      "monthlyChampion": "Monthly Champion",
+      "lastDaysChampion": "Yesterday's Champion",
+      "lastWeeksChampion": "Last Week's Champion",
+      "lastMonthsChampion": "Last Month's Champion",
+      "currentChampion": "Current Champion",
+      "period": "Period",
+      "xpEarned": "XP Earned"
     },
     "badges": {
       "title": "Badges",
@@ -378,6 +391,296 @@
       "name": "Balloon Legend",
       "description": "100 total correct answers",
       "howToEarn": "Give 100 total correct answers across all games!"
+    },
+    "simsek_refleks": {
+      "name": "Lightning Reflex",
+      "description": "Solve 3 questions correctly within 5 seconds",
+      "howToEarn": "Solve 3 questions correctly within 5 seconds total in any game!"
+    },
+    "hiz_canavari": {
+      "name": "Speed Demon",
+      "description": "Solve 5 questions correctly within 15 seconds",
+      "howToEarn": "Solve 5 questions correctly within 15 seconds total in any game!"
+    },
+    "zaman_ustasi": {
+      "name": "Time Master",
+      "description": "Solve 10 questions correctly within 30 seconds",
+      "howToEarn": "Solve 10 questions correctly within 30 seconds total in any game!"
+    },
+    "ultra_hizli": {
+      "name": "Ultra Fast",
+      "description": "Solve 20 questions correctly within 60 seconds",
+      "howToEarn": "Solve 20 questions correctly within 60 seconds total in any game!"
+    },
+    "flas_sampiyonu": {
+      "name": "Flash Champion",
+      "description": "Solve 50 questions correctly within 2 minutes",
+      "howToEarn": "Solve 50 questions correctly within 2 minutes total in any game!"
+    },
+    "mukemmel_baslangic": {
+      "name": "Perfect Start",
+      "description": "Solve 5 questions in a row without errors",
+      "howToEarn": "Solve 5 questions in a row without making any mistakes!"
+    },
+    "dogruluk_kahramani": {
+      "name": "Accuracy Hero",
+      "description": "Solve 20 questions in a row without errors",
+      "howToEarn": "Solve 20 questions in a row without making any mistakes!"
+    },
+    "mukemmel_usta": {
+      "name": "Perfect Master",
+      "description": "Solve 50 questions in a row without errors",
+      "howToEarn": "Solve 50 questions in a row without making any mistakes!"
+    },
+    "sifir_hata": {
+      "name": "Zero Mistakes",
+      "description": "100% accuracy on 20 questions",
+      "howToEarn": "Answer 20 questions with 100% accuracy!"
+    },
+    "kusursuz": {
+      "name": "Flawless",
+      "description": "100% accuracy on 50 questions",
+      "howToEarn": "Answer 50 questions with 100% accuracy!"
+    },
+    "toplama_yeni_baslayan": {
+      "name": "Addition Beginner",
+      "description": "Solve 50 addition questions correctly",
+      "howToEarn": "Solve a total of 50 addition questions correctly!"
+    },
+    "toplama_uzmani": {
+      "name": "Addition Expert",
+      "description": "Solve 100 addition questions correctly",
+      "howToEarn": "Solve a total of 100 addition questions correctly!"
+    },
+    "toplama_efsanesi": {
+      "name": "Addition Legend",
+      "description": "Solve 500 addition questions correctly",
+      "howToEarn": "Solve a total of 500 addition questions correctly!"
+    },
+    "cikarma_yeni_baslayan": {
+      "name": "Subtraction Beginner",
+      "description": "Solve 50 subtraction questions correctly",
+      "howToEarn": "Solve a total of 50 subtraction questions correctly!"
+    },
+    "cikarma_uzmani": {
+      "name": "Subtraction Expert",
+      "description": "Solve 100 subtraction questions correctly",
+      "howToEarn": "Solve a total of 100 subtraction questions correctly!"
+    },
+    "cikarma_efsanesi": {
+      "name": "Subtraction Legend",
+      "description": "Solve 500 subtraction questions correctly",
+      "howToEarn": "Solve a total of 500 subtraction questions correctly!"
+    },
+    "carpma_yeni_baslayan": {
+      "name": "Multiplication Beginner",
+      "description": "Solve 30 multiplication questions correctly",
+      "howToEarn": "Solve a total of 30 multiplication questions correctly!"
+    },
+    "carpma_uzmani": {
+      "name": "Multiplication Expert",
+      "description": "Solve 100 multiplication questions correctly",
+      "howToEarn": "Solve a total of 100 multiplication questions correctly!"
+    },
+    "carpma_efsanesi": {
+      "name": "Multiplication Legend",
+      "description": "Solve 300 multiplication questions correctly",
+      "howToEarn": "Solve a total of 300 multiplication questions correctly!"
+    },
+    "bolme_yeni_baslayan": {
+      "name": "Division Beginner",
+      "description": "Solve 25 division questions correctly",
+      "howToEarn": "Solve a total of 25 division questions correctly!"
+    },
+    "bolme_uzmani": {
+      "name": "Division Expert",
+      "description": "Solve 75 division questions correctly",
+      "howToEarn": "Solve a total of 75 division questions correctly!"
+    },
+    "bolme_efsanesi": {
+      "name": "Division Legend",
+      "description": "Solve 200 division questions correctly",
+      "howToEarn": "Solve a total of 200 division questions correctly!"
+    },
+    "macera_baslangic": {
+      "name": "Adventure Start",
+      "description": "Complete 1 adventure level",
+      "howToEarn": "Complete 1 adventure level in the Adventure game!"
+    },
+    "macera_kesifci": {
+      "name": "Adventure Explorer",
+      "description": "Complete 3 adventure levels",
+      "howToEarn": "Complete 3 adventure levels in the Adventure game!"
+    },
+    "macera_efsanesi": {
+      "name": "Adventure Legend",
+      "description": "Complete 6 adventure levels",
+      "howToEarn": "Complete all 6 adventure levels in the Adventure game!"
+    },
+    "macera_ustasi": {
+      "name": "Adventure Master",
+      "description": "Perfect performance on all levels",
+      "howToEarn": "Complete all adventure levels with perfect performance (3 stars each)!"
+    },
+    "seviye_hiz_rekortmeni": {
+      "name": "Level Speed Champion",
+      "description": "Complete a level at record speed",
+      "howToEarn": "Complete an adventure level in record time!"
+    },
+    "butun_seviyeleri_ac": {
+      "name": "Unlock All Levels",
+      "description": "Unlock all adventure levels",
+      "howToEarn": "Unlock all 6 adventure levels in the Adventure game!"
+    },
+    "uc_gunluk_seri": {
+      "name": "3 Day Streak",
+      "description": "Play 3 days in a row",
+      "howToEarn": "Play games for 3 consecutive days!"
+    },
+    "haftalik_kahraman": {
+      "name": "Weekly Hero",
+      "description": "Play 7 days in a row",
+      "howToEarn": "Play games for 7 consecutive days!"
+    },
+    "iki_hafta_ustasi": {
+      "name": "Two Week Master",
+      "description": "Play 14 days in a row",
+      "howToEarn": "Play games for 14 consecutive days!"
+    },
+    "ayin_sampiyonu": {
+      "name": "Champion of the Month",
+      "description": "Play 30 days in a row",
+      "howToEarn": "Play games for 30 consecutive days!"
+    },
+    "yuz_gun_efsanesi": {
+      "name": "100 Day Legend",
+      "description": "Play 100 days in a row",
+      "howToEarn": "Play games for 100 consecutive days!"
+    },
+    "balon_yeni_baslayan": {
+      "name": "Balloon Beginner",
+      "description": "5 correct in Balloon Pop game",
+      "howToEarn": "Get 5 correct answers in the Balloon Pop game!"
+    },
+    "balon_uzmani": {
+      "name": "Balloon Expert",
+      "description": "50 correct in Balloon Pop game",
+      "howToEarn": "Get 50 correct answers in the Balloon Pop game!"
+    },
+    "balon_efsanesi_oyun": {
+      "name": "Balloon Legend",
+      "description": "200 correct in Balloon Pop game",
+      "howToEarn": "Get 200 correct answers in the Balloon Pop game!"
+    },
+    "hizli_yaris_yeni_baslayan": {
+      "name": "Quick Race Beginner",
+      "description": "10 correct in Quick Race game",
+      "howToEarn": "Get 10 correct answers in the Quick Race game!"
+    },
+    "hizli_yaris_uzmani": {
+      "name": "Quick Race Expert",
+      "description": "100 correct in Quick Race game",
+      "howToEarn": "Get 100 correct answers in the Quick Race game!"
+    },
+    "hizli_yaris_sampiyonu": {
+      "name": "Quick Race Champion",
+      "description": "500 correct in Quick Race game",
+      "howToEarn": "Get 500 correct answers in the Quick Race game!"
+    },
+    "kesir_ustasi": {
+      "name": "Fraction Master",
+      "description": "20 achievements in Fractions game",
+      "howToEarn": "Get 20 achievements in the Fractions game!"
+    },
+    "kesir_buyucusu": {
+      "name": "Fraction Wizard",
+      "description": "100 achievements in Fractions game",
+      "howToEarn": "Get 100 achievements in the Fractions game!"
+    },
+    "geometri_uzmani": {
+      "name": "Geometry Expert",
+      "description": "20 achievements in Geometry game",
+      "howToEarn": "Get 20 achievements in the Geometry game!"
+    },
+    "geometri_dahisi": {
+      "name": "Geometry Genius",
+      "description": "100 achievements in Geometry game",
+      "howToEarn": "Get 100 achievements in the Geometry game!"
+    },
+    "ilk_adimlar": {
+      "name": "First Steps",
+      "description": "Earn 100 XP",
+      "howToEarn": "Earn a total of 100 XP!"
+    },
+    "ogrenci_yildiz": {
+      "name": "Student Star",
+      "description": "Earn 500 XP",
+      "howToEarn": "Earn a total of 500 XP!"
+    },
+    "ogrenci_kahramani": {
+      "name": "Student Hero",
+      "description": "Earn 1000 XP",
+      "howToEarn": "Earn a total of 1000 XP!"
+    },
+    "matematik_ustasi": {
+      "name": "Math Master",
+      "description": "Earn 2500 XP",
+      "howToEarn": "Earn a total of 2500 XP!"
+    },
+    "matematik_efsanesi": {
+      "name": "Math Legend",
+      "description": "Earn 5000 XP",
+      "howToEarn": "Earn a total of 5000 XP!"
+    },
+    "ustun_ogrenci": {
+      "name": "Outstanding Student",
+      "description": "Earn 10000 XP",
+      "howToEarn": "Earn a total of 10000 XP!"
+    },
+    "matematik_dehasi": {
+      "name": "Math Genius",
+      "description": "Earn 25000 XP",
+      "howToEarn": "Earn a total of 25000 XP!"
+    },
+    "hafta_savasci": {
+      "name": "Week Warrior",
+      "description": "Play 5 days in a week",
+      "howToEarn": "Play games on 5 different days in a single week!"
+    },
+    "gunluk_sampiyon": {
+      "name": "Daily Champion",
+      "description": "Earn 500 XP in a day",
+      "howToEarn": "Earn a total of 500 XP in a single day!"
+    },
+    "haftalik_usta": {
+      "name": "Weekly Master",
+      "description": "Earn 2000 XP in a week",
+      "howToEarn": "Earn a total of 2000 XP in a single week!"
+    },
+    "hafta_sonu_savasci": {
+      "name": "Weekend Warrior",
+      "description": "Play on both Saturday and Sunday",
+      "howToEarn": "Play games on both Saturday and Sunday!"
+    },
+    "gece_yarisi_oyuncu": {
+      "name": "Midnight Player",
+      "description": "Play after midnight",
+      "howToEarn": "Play a game after midnight (between 12 AM and 6 AM)!"
+    },
+    "erken_kusu": {
+      "name": "Early Bird",
+      "description": "Play before 6 AM",
+      "howToEarn": "Play a game before 6 AM!"
+    },
+    "mukemmel_hafta": {
+      "name": "Perfect Week",
+      "description": "7 perfect games in a row",
+      "howToEarn": "Play 7 days in a row with perfect games (no mistakes)!"
+    },
+    "koleksiyoncu": {
+      "name": "Collector",
+      "description": "Earn 25 different badges",
+      "howToEarn": "Earn 25 different badges!"
     }
   }
 }

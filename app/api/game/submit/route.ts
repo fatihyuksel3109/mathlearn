@@ -6,6 +6,7 @@ import GameSession from '@/models/GameSession';
 import User from '@/models/User';
 import { calculateXP } from '@/lib/gameUtils';
 import { checkAllBadges } from '@/lib/badgeSystem';
+import { checkAndSaveExpiredChampions } from '@/lib/championUtils';
 
 export async function POST(request: Request) {
   try {
@@ -105,6 +106,12 @@ export async function POST(request: Request) {
       }
       
       await user.save();
+
+      // Check for expired periods and save champions
+      // This runs in the background and won't block the response
+      checkAndSaveExpiredChampions().catch((error) => {
+        console.error('Error checking expired champions:', error);
+      });
 
       // Check for new badges
       const newlyEarnedBadges = await checkAllBadges(
