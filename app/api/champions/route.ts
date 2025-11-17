@@ -4,9 +4,10 @@ import {
   getCurrentChampion,
   getCurrentPeriodLeader,
   getHistoricalChampions,
-  getPreviousPeriodBounds,
+  getPeriodBounds,
   PeriodType,
 } from '@/lib/championUtils';
+import { IChampion } from '@/models/Champion';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -26,25 +27,35 @@ export async function GET() {
     // Get current champions for each period type
     for (const periodType of periodTypes) {
       // Try to get saved champion first
-      let champion = await getCurrentChampion(periodType);
+      let champion: IChampion | null = await getCurrentChampion(periodType);
 
       // If no saved champion, get current period leader
       if (!champion) {
         const leader = await getCurrentPeriodLeader(periodType);
         if (leader) {
-          champion = {
+          const bounds = getPeriodBounds(periodType);
+          // Create a temporary champion-like object for response
+          const tempChampion = {
             userId: leader.userId,
             userName: leader.userName,
             userAvatar: leader.userAvatar,
             xpEarned: leader.xpEarned,
             periodType,
-            periodStart: null,
-            periodEnd: null,
+            periodStart: bounds.start,
+            periodEnd: bounds.end,
           };
+          
+          current[periodType] = {
+            userId: tempChampion.userId.toString(),
+            userName: tempChampion.userName,
+            userAvatar: tempChampion.userAvatar,
+            xp: tempChampion.xpEarned,
+            period: periodType,
+          };
+        } else {
+          current[periodType] = null;
         }
-      }
-
-      if (champion) {
+      } else {
         current[periodType] = {
           userId: champion.userId.toString(),
           userName: champion.userName,
@@ -52,8 +63,6 @@ export async function GET() {
           xp: champion.xpEarned,
           period: periodType,
         };
-      } else {
-        current[periodType] = null;
       }
 
       // Get historical champions (excluding current period)
